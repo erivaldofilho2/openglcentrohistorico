@@ -1,19 +1,20 @@
 # Compila e executa com o comando make (unix like)
-FONTE=main.cpp
+FONTE=main.cpp desenha_predio.cpp
+OBJETO=main.o desenha_predio.o
 APP=centro_historico.app
 
 CC=g++
-GLFLAGS=-lglut -lGL -lGLU -lGLEW -lSOIL
-CFLAGS=-std=c++11
+GLFLAGS=-lglut -lGL -lGLU
+CFLAGS=-std=c++11 -Wall
 
-all: compila executa
+all: compila
+	./$(APP) # executa
 
-compila:
-	$(CC) $(FONTE) $(GLFLAGS) $(CFLAGS) -o $(APP)
+compila: objeto
+	$(CC) -o $(APP) $(OBJETO) $(GLFLAGS)
 
-executa:
-	./$(APP)
+objeto:
+	$(CC) -c $(CFLAGS) $(FONTE)
 
 clear:
 	rm -f $(APP)
-
