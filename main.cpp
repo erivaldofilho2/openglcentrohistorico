@@ -64,11 +64,11 @@ void exibir(void){
 void especial(int key, int x, int y){
     switch (key) {
     case GLUT_KEY_UP:
-        if (vetor_y < 13)
+        if (vetor_y < 12)
             vetor_y += 0.2;
         break;
     case GLUT_KEY_DOWN:
-        if (vetor_y > 7)
+        if (vetor_y > 8)
             vetor_y -= 0.2;
         break;
     case GLUT_KEY_LEFT:
