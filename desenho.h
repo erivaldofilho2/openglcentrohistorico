@@ -5,7 +5,7 @@
 
 class Desenho {
 public:
-	unsigned int desenha_predio();
+    unsigned int desenha_predio();
 };
 
 #endif
