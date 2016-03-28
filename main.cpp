@@ -1,3 +1,7 @@
+/*
+ * Modelagem do Antigo Grupo Escolar Ladislau Neto
+ */
+
 #include <cmath>
 #include <GL/glut.h>
 #include <iostream>
@@ -112,6 +116,11 @@ void teclado(unsigned char key, int x, int y){
 void inicializa() {
     glBlendFunc (GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
     glEnable (GL_TEXTURE_2D);
+    /* @func glEnable (GL_DEPTH_TEST)
+     * Antes de cada pixel ser desenhado é feita uma comparação com
+     * o valor de profundidade já armazenado
+     */
+    glEnable (GL_DEPTH_TEST);
     predio = desenhista.desenha_predio();
 }
 
