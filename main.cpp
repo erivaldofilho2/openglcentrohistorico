@@ -15,18 +15,19 @@ unsigned int predio;
 unsigned int cadeiras;
 //// Fim de indentificadores de lista de chamadas
 
-float vetor_x = 0.0, vetor_y = 10.0, vetor_z = -1.0; // vetor direção da câmera
-float x = 0.0, y = 0.0, z = 100.0; // posição da câmera
+float vetor_x = 0.0, vetor_y = 0.0, vetor_z = -1.0; // vetor direção da câmera
+float x = 0.0, y = 2.0, z = 30.0; // posição da câmera
 float deltaMove = 0.0;
 float lateralMove = 0.0;
 float deltaAngle = 0.0;
+float verticalMove = 0.0;
 
 // Essa função é chamada quando alguma dimensão da janela é alterada
 void remodelar (int largura, int altura){
     glViewport (0, 0, largura, altura);
     glMatrixMode (GL_PROJECTION);
     glLoadIdentity();
-    gluPerspective (80.0, largura / (float)altura, 0.1, 200.0);
+    gluPerspective (80.0, largura / (float)altura, 0.1, 600.0);
     glMatrixMode (GL_MODELVIEW);
 }
 
@@ -41,6 +42,10 @@ void exibir(void){
         z += lateralMove * (-cos(deltaAngle + PI / 2));
         lateralMove = 0;
     }
+    if (verticalMove) { // move camera no eixo vertical
+        y += verticalMove;
+        verticalMove = 0;
+    }
 
     glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glEnable (GL_BLEND);
@@ -53,7 +58,7 @@ void exibir(void){
     // empilha matriz atual (anterior à chamada da função)
     glPushMatrix();
     // define câmera
-    gluLookAt (x, 10, z, x+vetor_x, vetor_y, z+vetor_z, 0.0, 1.0, 0.0);
+    gluLookAt (x, y, z, x+vetor_x, y+sin(vetor_y), z+vetor_z, 0.0, 1.0, 0.0);
     glShadeModel (GL_SMOOTH);
 
     //// INICIO DESENHO DE OBJETOS
@@ -68,12 +73,12 @@ void exibir(void){
 void especial(int key, int x, int y){
     switch (key) {
     case GLUT_KEY_UP:
-        if (vetor_y < 12)
-            vetor_y += 0.2;
+        if (vetor_y <= 1.6)
+            vetor_y += 0.1;
         break;
     case GLUT_KEY_DOWN:
-        if (vetor_y > 8)
-            vetor_y -= 0.2;
+        if (vetor_y >= -1.6)
+            vetor_y -= 0.1;
         break;
     case GLUT_KEY_LEFT:
         deltaAngle -= 0.1;
@@ -92,19 +97,27 @@ void especial(int key, int x, int y){
 void teclado(unsigned char key, int x, int y){
     switch (key) {
     case 'w':
-        deltaMove = 10;
+        deltaMove = 3;
         break;
     case 's':
-        deltaMove = -10;
+        deltaMove = -3;
         break;
     case 'a':
-        lateralMove = -10;
+        lateralMove = -3;
         break;
     case 'd':
-        lateralMove = 10;
+        lateralMove = 3;
+        break;
+    case 'r':
+        verticalMove = 3;
+        break;
+    case 'f':
+        verticalMove = -3;
         break;
     case '1':
-        vetor_y = 10;
+        vetor_y = 0;
+        y = 10;
+        verticalMove = 0;
         break;
     case 27: // esc
         exit(0);
@@ -116,7 +129,8 @@ void teclado(unsigned char key, int x, int y){
 void inicializa() {
     glBlendFunc (GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
     glEnable (GL_TEXTURE_2D);
-    /* @func glEnable (GL_DEPTH_TEST)
+    /* 
+     * @func glEnable (GL_DEPTH_TEST)
      * Antes de cada pixel ser desenhado é feita uma comparação com
      * o valor de profundidade já armazenado
      */
