@@ -2,6 +2,7 @@
 #define DESENHISTA_H
 
 #include <GL/glut.h>
+#include <cmath>
 
 class Desenho {
 public:
