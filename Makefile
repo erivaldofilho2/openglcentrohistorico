@@ -1,6 +1,6 @@
 # Compila e executa com o comando make (unix like)
-FONTE=main.cpp desenha_predio.cpp
-OBJETO=main.o desenha_predio.o
+FONTE=main.cpp desenha_predio.cpp desenha_janela.cpp
+OBJETO=main.o desenha_predio.o desenha_janela.o
 APP=centro_historico.app
 
 CC=g++
