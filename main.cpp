@@ -137,7 +137,7 @@ void inicializa() {
      */
     glEnable (GL_DEPTH_TEST);
     predio = desenhista.desenha_predio (0, 0, 0);
-    janela = desenhista.desenha_janela (0, 1, .1);
+    janela = desenhista.desenha_janela (0, 3, .1);
 }
 
 int main (int argc,char **argv){
