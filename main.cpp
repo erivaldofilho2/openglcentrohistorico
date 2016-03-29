@@ -12,7 +12,7 @@
 Desenho desenhista; // coleção de funções que desenha os objetos
 //// Início de indentificadores de lista de chamadas
 unsigned int predio;
-unsigned int cadeiras;
+unsigned int janela;
 //// Fim de indentificadores de lista de chamadas
 
 float vetor_x = 0.0, vetor_y = 0.0, vetor_z = -1.0; // vetor direção da câmera
@@ -63,6 +63,7 @@ void exibir(void){
 
     //// INICIO DESENHO DE OBJETOS
     glCallList(predio);
+    glCallList(janela);
     //// FIM DE DESENHO DE OBJETOS
     
     // desempilha matriz anterior à chamada da função
@@ -135,7 +136,8 @@ void inicializa() {
      * o valor de profundidade já armazenado
      */
     glEnable (GL_DEPTH_TEST);
-    predio = desenhista.desenha_predio();
+    predio = desenhista.desenha_predio (0, 0, 0);
+    janela = desenhista.desenha_janela (0, 1, .1);
 }
 
 int main (int argc,char **argv){
