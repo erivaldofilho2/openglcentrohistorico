@@ -115,6 +115,24 @@ void teclado(unsigned char key, int x, int y){
     case 'f':
         verticalMove = -3;
         break;
+    case 'W':
+        deltaMove = 0.1;
+        break;
+    case 'S':
+        deltaMove = -0.1;
+        break;
+    case 'A':
+        lateralMove = -0.1;
+        break;
+    case 'D':
+        lateralMove = 0.1;
+        break;
+    case 'R':
+        verticalMove = 0.1;
+        break;
+    case 'F':
+        verticalMove = -0.1;
+        break;
     case '1':
         vetor_y = 0;
         y = 10;
