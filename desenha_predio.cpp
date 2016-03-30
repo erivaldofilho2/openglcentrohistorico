@@ -4,6 +4,9 @@ unsigned int Desenho::desenha_predio(float pos_x, float pos_y, float pos_z) {
     float proporcao = 2;
     Desenha_gl gl (pos_x, pos_y, pos_z, proporcao);
 
+    // variáveis auxiliares de posição
+    float x, y, z;
+
     float cor_parede[3] = {0xa3/256.0, 0x90/256.0, 0x7f/256.0};
     float cor_portao[3] = {0x23/256.0, 0x36/256.0, 0x4f/256.0};
     float cor_telhado[3] = {0x61/256.0, 0x2c/256.0, 0x1c/256.0};
@@ -33,7 +36,7 @@ unsigned int Desenho::desenha_predio(float pos_x, float pos_y, float pos_z) {
     // parede frontal
     glColor3f ( cor_parede[0], cor_parede[1], cor_parede[2] );
     gl.define_deslocamento (0, frontal_altura / 2, 0);
-    gl.define_escala (frontal_comprimento, frontal_altura, parede_largura);
+    gl.define_escala (frontal_comprimento + parede_largura, frontal_altura, parede_largura);
     gl.define_rotacao (0, 0, 0, 0);
     gl.desenha_cubo();
 
@@ -60,18 +63,63 @@ unsigned int Desenho::desenha_predio(float pos_x, float pos_y, float pos_z) {
     gl.define_escala (lateral_comprimento, entrada_garagem_altura, parede_largura);
     gl.define_rotacao (90, 0, 1, 0);
     gl.desenha_cubo();
+    // face sobre o muro
+    glBegin (GL_POLYGON);
+        glColor3f ( cor_parede[0]-0.1, cor_parede[1]-0.1, cor_parede[2]-0.1 );
+        x = proporcao * (frontal_comprimento / 2 + entrada_garagem_largura + parede_largura / 2);
+        y = proporcao * (entrada_garagem_altura+0.01);
+        z = proporcao * parede_largura / 2;
+        glVertex3f (x, y, z);
+        z -= proporcao * (lateral_comprimento + parede_largura);
+        glVertex3f (x, y, z);
+        x -= proporcao * parede_largura;
+        glVertex3f (x, y, z);
+        z = proporcao * parede_largura / 2;
+        glVertex3f (x, y, z);
+    glEnd();
+    glColor3f ( cor_parede[0], cor_parede[1], cor_parede[2] );
 
     // entrada da garagem
     gl.define_deslocamento (frontal_comprimento / 2 + entrada_garagem_largura / 2, entrada_garagem_altura / 2, 0);
     gl.define_escala (entrada_garagem_largura, entrada_garagem_altura, parede_largura);
     gl.define_rotacao (0, 0, 0, 0);
     gl.desenha_cubo();
+    // face sobre o muro
+    glBegin (GL_POLYGON);
+        glColor3f ( cor_parede[0]-0.1, cor_parede[1]-0.1, cor_parede[2]-0.1 );
+        x = proporcao * frontal_comprimento / 2;
+        y = proporcao * (entrada_garagem_altura+0.01);
+        z = -proporcao * parede_largura / 2;
+        glVertex3f (x, y, z);
+        z = proporcao * parede_largura / 2;
+        glVertex3f (x, y, z);
+        x += proporcao * entrada_garagem_largura;
+        glVertex3f (x, y, z);
+        z = -proporcao * parede_largura / 2;
+        glVertex3f (x, y, z);
+    glEnd();
+    glColor3f ( cor_parede[0], cor_parede[1], cor_parede[2] );
 
     // parede do fundo da garagem
     gl.define_deslocamento (frontal_comprimento / 2 + entrada_garagem_largura / 2, entrada_garagem_altura / 2, -lateral_comprimento);
     gl.define_escala (entrada_garagem_largura, entrada_garagem_altura, parede_largura);
     gl.define_rotacao (0, 0, 0, 0);
     gl.desenha_cubo();
+    // face sobre o muro
+    glBegin (GL_POLYGON);
+        glColor3f ( cor_parede[0]-0.1, cor_parede[1]-0.1, cor_parede[2]-0.1 );
+        x = proporcao * frontal_comprimento / 2;
+        y = proporcao * (entrada_garagem_altura+0.01);
+        z = -proporcao * ((parede_largura / 2) + lateral_comprimento);
+        glVertex3f (x, y, z);
+        z += proporcao * parede_largura;
+        glVertex3f (x, y, z);
+        x += proporcao * entrada_garagem_largura;
+        glVertex3f (x, y, z);
+        z -= proporcao * parede_largura;
+        glVertex3f (x, y, z);
+    glEnd();
+    glColor3f ( cor_parede[0], cor_parede[1], cor_parede[2] );
 
     // portão da garagem
     glColor3f ( cor_portao[0], cor_portao[1], cor_portao[2] );
@@ -143,14 +191,109 @@ unsigned int Desenho::desenha_predio(float pos_x, float pos_y, float pos_z) {
 
     // telhado
     glColor3f ( cor_telhado[0], cor_telhado[1], cor_telhado[2] );
-    gl.define_deslocamento (0, lateral_altura +.4 + sin(-60)*lateral_comprimento/4, -lateral_comprimento/4);
-    gl.define_escala (frontal_comprimento, -.4+lateral_comprimento/(2*cos(60)), 0.05);
-    gl.define_rotacao (-60, 1, 0, 0);
+    gl.define_deslocamento (0, lateral_altura -0.3 + sin(-60)*lateral_comprimento/4, -lateral_comprimento/4);
+    gl.define_escala (frontal_comprimento, 0.05+lateral_comprimento/(2*cos(-60)), 0.05);
+    gl.define_rotacao (-80, 1, 0, 0);
     gl.desenha_cubo();
-    gl.define_deslocamento (0, lateral_altura +.4 + sin(-60)*lateral_comprimento/4, -lateral_comprimento*3/4);
-    gl.define_escala (frontal_comprimento, -.4+lateral_comprimento/(2*cos(60)), 0.05);
-    gl.define_rotacao (60, 1, 0, 0);
+    gl.define_deslocamento (0, lateral_altura -0.3 + sin(-60)*lateral_comprimento/4, -lateral_comprimento*3/4);
+    gl.define_escala (frontal_comprimento, 0.05+lateral_comprimento/(2*cos(-60)), 0.05);
+    gl.define_rotacao (80, 1, 0, 0);
     gl.desenha_cubo();
+
+    // Detalhe sobre os muros laterais 
+    // muro esquerdo
+    glBegin (GL_POLYGON);
+        glColor3f ( cor_parede[0], cor_parede[1], cor_parede[2] );
+        x = -proporcao * frontal_comprimento / 2 - proporcao * parede_largura / 2;
+        y = proporcao * lateral_altura;
+        z = -proporcao * parede_largura / 2;
+        glVertex3f (x, y, z);
+        y = proporcao * frontal_altura;
+        glVertex3f (x, y, z);
+        z -= proporcao * 0.5;
+        y -= proporcao * 0.8;
+        glVertex3f (x, y, z);
+        z -= proporcao * 0.4;
+        y -= proporcao * 0.1;
+        glVertex3f (x, y, z);
+        y = proporcao * lateral_altura;
+        glVertex3f (x, y, z);
+    glEnd();
+    glBegin (GL_POLYGON);
+        //z -= proporcao * 0.75;
+        glVertex3f (x, y, z);
+        y = proporcao * (frontal_altura - 0.9);
+        glVertex3f (x, y, z);
+        z -= proporcao * 0.3;
+        glVertex3f (x, y, z);
+        y = proporcao * lateral_altura;
+        glVertex3f (x, y, z);
+    glEnd();
+    glBegin (GL_POLYGON);
+        glVertex3f (x, y, z);
+        y = proporcao * (frontal_altura - 0.9);
+        glVertex3f (x, y, z);
+        z -= proporcao * 2;
+        y += proporcao * 0.7;
+        glVertex3f (x, y, z);
+        y = proporcao * lateral_altura;
+        glVertex3f (x, y, z);
+    glEnd();
+    glBegin (GL_POLYGON);
+        glVertex3f (x, y, z);
+        y = proporcao * (frontal_altura - 0.2);
+        glVertex3f (x, y, z);
+        z = -proporcao * lateral_comprimento;
+        y = proporcao * lateral_altura;
+        glVertex3f (x, y, z);
+    glEnd();
+    // Detalhe sobre os muros laterais 
+    // muro direito
+    glBegin (GL_POLYGON);
+        glColor3f ( cor_parede[0], cor_parede[1], cor_parede[2] );
+        x = proporcao * frontal_comprimento / 2 + proporcao * parede_largura / 2;
+        y = proporcao * lateral_altura;
+        z = -proporcao * parede_largura / 2;
+        glVertex3f (x, y, z);
+        y = proporcao * frontal_altura;
+        glVertex3f (x, y, z);
+        z -= proporcao * 0.5;
+        y -= proporcao * 0.8;
+        glVertex3f (x, y, z);
+        z -= proporcao * 0.4;
+        y -= proporcao * 0.1;
+        glVertex3f (x, y, z);
+        y = proporcao * lateral_altura;
+        glVertex3f (x, y, z);
+    glEnd();
+    glBegin (GL_POLYGON);
+        //z -= proporcao * 0.75;
+        glVertex3f (x, y, z);
+        y = proporcao * (frontal_altura - 0.9);
+        glVertex3f (x, y, z);
+        z -= proporcao * 0.3;
+        glVertex3f (x, y, z);
+        y = proporcao * lateral_altura;
+        glVertex3f (x, y, z);
+    glEnd();
+    glBegin (GL_POLYGON);
+        glVertex3f (x, y, z);
+        y = proporcao * (frontal_altura - 0.9);
+        glVertex3f (x, y, z);
+        z -= proporcao * 2;
+        y += proporcao * 0.7;
+        glVertex3f (x, y, z);
+        y = proporcao * lateral_altura;
+        glVertex3f (x, y, z);
+    glEnd();
+    glBegin (GL_POLYGON);
+        glVertex3f (x, y, z);
+        y = proporcao * (frontal_altura - 0.2);
+        glVertex3f (x, y, z);
+        z = -proporcao * lateral_comprimento;
+        y = proporcao * lateral_altura;
+        glVertex3f (x, y, z);
+    glEnd();
 
     glEndList();
     return predio;
