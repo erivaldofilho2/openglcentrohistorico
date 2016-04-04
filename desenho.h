@@ -4,13 +4,25 @@
 #include <GL/glut.h>
 #include <cmath>
 
-class Desenho {
+/*
+ * Classe com funções que desenham objetos
+ */
+class Desenho
+{
 public:
-    unsigned int desenha_predio (float, float, float);
-    unsigned int desenha_janela (float, float, float);
+    unsigned int desenha_predio (float x, float y, float z);
+    unsigned int desenha_janela (float x, float y, float z);
+    // unsigned int desenha_mesa (float x, float y, float z);
+    // unsigned int desenha_cadeira (float x, float y, float z);
+    // unsigned int desenha_quadro_branco (float x, float y, float z);
 };
 
-class Desenha_gl {
+
+ /*
+  * Classe para aulixiar uso do OpenGL na implementação da classe Desenho
+  */
+class Desenha_gl
+{
 private:
     float x, y, z, proporcao;
     float desloc_x, desloc_y, desloc_z;
