@@ -27,10 +27,10 @@ unsigned int Desenho::desenha_predio(float pos_x, float pos_y, float pos_z) {
     // Desenha chão
     glColor3f (0.0, 0.2, 0.0);
     glBegin (GL_QUADS);
-        glVertex3f (-100, 0, -100);
-        glVertex3f (-100, 0,  100);
-        glVertex3f ( 100, 0,  100);
-        glVertex3f ( 100, 0, -100);
+        glVertex3f (-10000, 0, -10000);
+        glVertex3f (-10000, 0,  10000);
+        glVertex3f ( 10000, 0,  10000);
+        glVertex3f ( 10000, 0, -10000);
     glEnd();
     
     // parede frontal
