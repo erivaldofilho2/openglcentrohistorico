@@ -31,7 +31,6 @@ void remodelar (int largura, int altura){
     glMatrixMode (GL_MODELVIEW);
 }
 
-
 // Referência: http://www.inf.pucrs.br/~manssour/OpenGL/Iluminacao.html
 //iluminacao
 void iluminacao_externa(void)
@@ -95,7 +94,7 @@ void exibir(void){
     glEnable (GL_BLEND);
     glShadeModel (GL_SMOOTH);
     glDepthMask (GL_TRUE);
-    glClearColor (0.5,0.5,0.5,0.5);
+    glClearColor (0.32,0.57,0.88,0);
     glClear (GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
     glLoadIdentity(); // Reinicia matriz de transformação
 
