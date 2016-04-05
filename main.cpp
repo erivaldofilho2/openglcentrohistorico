@@ -13,6 +13,8 @@ Desenho desenhista; // coleção de funções que desenha os objetos
 //// Início de indentificadores de lista de chamadas
 unsigned int predio;
 unsigned int janela;
+unsigned int mesa;
+unsigned int cadeira;
 //// Fim de indentificadores de lista de chamadas
 
 float vetor_x = 0.0, vetor_y = 0.0, vetor_z = -1.0; // vetor direção da câmera
@@ -107,6 +109,8 @@ void exibir(void){
     //// INICIO DESENHO DE OBJETOS
     glCallList(predio);
     glCallList(janela);
+    glCallList(mesa);
+    glCallList(cadeira);
     //// FIM DE DESENHO DE OBJETOS
     
     // desempilha matriz anterior à chamada da função
@@ -198,7 +202,9 @@ void inicializa() {
      */
     glEnable (GL_DEPTH_TEST);
     predio = desenhista.desenha_predio (0, 0, 0);
-    janela = desenhista.desenha_janela (0, 3, .1);
+    janela = desenhista.desenha_janela (0, 5, .2);
+    mesa = desenhista.desenha_mesa (0, 0, -5);
+    cadeira = desenhista.desenha_cadeira (6, 0, -5);
 }
 
 int main (int argc,char **argv){
