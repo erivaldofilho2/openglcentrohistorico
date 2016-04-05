@@ -1,6 +1,6 @@
 # Compila e executa com o comando make (unix like)
-FONTE=main.cpp desenha_predio.cpp desenha_janela.cpp
-OBJETO=main.o desenha_predio.o desenha_janela.o
+FONTE=main.cpp desenha_predio.cpp desenha_janela.cpp desenha_mesa.cpp desenha_cadeira.cpp
+OBJETO=main.o desenha_predio.o desenha_janela.o desenha_mesa.cpp desenha_cadeira.cpp
 APP=centro_historico.app
 
 CC=g++
@@ -17,4 +17,4 @@ objeto:
 	$(CC) -c $(CFLAGS) $(FONTE)
 
 clear:
-	rm -f $(APP)
+	rm -f $(APP) *.o
