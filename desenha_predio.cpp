@@ -1,7 +1,6 @@
 #include "desenho.h"
 
-unsigned int Desenho::desenha_predio(float pos_x, float pos_y, float pos_z) {
-    float proporcao = 2;
+unsigned int Desenho::desenha_predio (float pos_x, float pos_y, float pos_z) {
     Desenha_gl gl (pos_x, pos_y, pos_z, proporcao);
 
     // variáveis auxiliares de posição

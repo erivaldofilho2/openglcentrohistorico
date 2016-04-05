@@ -10,11 +10,15 @@
 class Desenho
 {
 public:
+    Desenho () {proporcao = 4;}
     unsigned int desenha_predio (float x, float y, float z);
     unsigned int desenha_janela (float x, float y, float z);
-    // unsigned int desenha_mesa (float x, float y, float z);
-    // unsigned int desenha_cadeira (float x, float y, float z);
+    unsigned int desenha_mesa (float x, float y, float z);
+    unsigned int desenha_cadeira (float x, float y, float z);
     // unsigned int desenha_quadro_branco (float x, float y, float z);
+
+private:
+    float proporcao;
 };
 
 
