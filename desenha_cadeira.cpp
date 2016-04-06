@@ -15,7 +15,6 @@ unsigned int Desenho::desenha_cadeira (float pos_x, float pos_y, float pos_z) {
     float perna_cadeira_lado = 0.02;
     float encosto_cadeira_altura = 0.5;
     float encosto_cadeira_lagura = 0.5;
-    float cadeira_altura = perna_cadeira_altura + cadeira_espessura/2;
 
     // perna 1 da cadeira
     glColor3f ( cor_cadeira[0], cor_cadeira[1], cor_cadeira[2] );
