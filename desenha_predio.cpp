@@ -45,6 +45,15 @@ unsigned int Desenho::desenha_predio (float pos_x, float pos_y, float pos_z) {
     gl.define_escala (frontal_comprimento + parede_largura, frontal_altura, parede_largura);
     gl.define_rotacao (0, 0, 0, 0);
     gl.desenha_cubo();
+    // desenha janelas
+    desenha_janela (0, proporcao * 1.5, 0);
+    desenha_janela (-proporcao * (1.4), proporcao * 1.5, 0);
+    desenha_janela ( proporcao * (1.4), proporcao * 1.5, 0);
+    desenha_janela (-proporcao * (frontal_comprimento/4 - 0.5), proporcao * 1.5, 0);
+    desenha_janela ( proporcao * (frontal_comprimento/4 - 0.5), proporcao * 1.5, 0);
+    desenha_janela (-proporcao * (frontal_comprimento/2.6), proporcao * 1.5, 0);
+    desenha_janela ( proporcao * (frontal_comprimento/2.6), proporcao * 1.5, 0);
+    glColor3f ( cor_parede[0], cor_parede[1], cor_parede[2] );
 
     // parede de fundo
     gl.define_deslocamento (0, lateral_altura / 2, -lateral_comprimento);
