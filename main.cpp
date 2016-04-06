@@ -9,7 +9,6 @@
 
 #define PI 3.1415926535897932
 
-Desenho desenhista; // coleção de funções que desenha os objetos
 //// Início de indentificadores de lista de chamadas
 unsigned int predio;
 unsigned int janela;
@@ -17,8 +16,10 @@ unsigned int mesa;
 unsigned int cadeira;
 //// Fim de indentificadores de lista de chamadas
 
+float proporcao = 2.5;
+Desenho desenhista (proporcao); // coleção de funções que desenha os objetos
 float vetor_x = 0.0, vetor_y = 0.0, vetor_z = -1.0; // vetor direção da câmera
-float x = 0.0, y = 2.0, z = 30.0; // posição da câmera
+float x = 0.0 * proporcao, y = 1.7 * proporcao, z = 10.0 * proporcao; // posição da câmera
 float deltaMove = 0.0;
 float lateralMove = 0.0;
 float deltaAngle = 0.0;
@@ -202,9 +203,9 @@ void inicializa() {
      */
     glEnable (GL_DEPTH_TEST);
     predio = desenhista.desenha_predio (0, 0, 0);
-    janela = desenhista.desenha_janela (0, 5, .2);
-    mesa = desenhista.desenha_mesa (0, 0, -5);
-    cadeira = desenhista.desenha_cadeira (6, 0, -5);
+    janela = desenhista.desenha_janela (0, 1.5*proporcao, .2);
+    mesa = desenhista.desenha_mesa (0, 0, 10);
+    cadeira = desenhista.desenha_cadeira (0, 0, 12);
 }
 
 int main (int argc,char **argv){

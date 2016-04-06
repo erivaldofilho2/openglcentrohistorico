@@ -24,12 +24,19 @@ unsigned int Desenho::desenha_predio (float pos_x, float pos_y, float pos_z) {
     glNewList (predio, GL_COMPILE);
 
     // Desenha chão
-    glColor3f (0.0, 0.2, 0.0);
+    glColor3f (0.0, 0.29, 0.0);
     glBegin (GL_QUADS);
         glVertex3f (-10000, 0, -10000);
         glVertex3f (-10000, 0,  10000);
         glVertex3f ( 10000, 0,  10000);
         glVertex3f ( 10000, 0, -10000);
+    glEnd();
+    glColor3f (0.2, 0.2, 0.2);
+    glBegin (GL_QUADS);
+        glVertex3f (-proporcao * frontal_comprimento/2, 0.1, -0);
+        glVertex3f (-proporcao * frontal_comprimento/2, 0.1, -proporcao * lateral_comprimento);
+        glVertex3f ( proporcao * frontal_comprimento/2, 0.1, -proporcao * lateral_comprimento);
+        glVertex3f ( proporcao * frontal_comprimento/2, 0., -0);
     glEnd();
     
     // parede frontal
