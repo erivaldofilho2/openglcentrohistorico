@@ -11,7 +11,6 @@
 
 //// Início de indentificadores de lista de chamadas
 unsigned int predio;
-unsigned int janela;
 unsigned int mesa;
 unsigned int cadeira;
 //// Fim de indentificadores de lista de chamadas
@@ -109,7 +108,6 @@ void exibir(void){
 
     //// INICIO DESENHO DE OBJETOS
     glCallList(predio);
-    glCallList(janela);
     glCallList(mesa);
     glCallList(cadeira);
     //// FIM DE DESENHO DE OBJETOS
@@ -203,7 +201,6 @@ void inicializa() {
      */
     glEnable (GL_DEPTH_TEST);
     predio = desenhista.desenha_predio (0, 0, 0);
-    janela = desenhista.desenha_janela (0, 1.5*proporcao, .2);
     mesa = desenhista.desenha_mesa (0, 0, 10);
     cadeira = desenhista.desenha_cadeira (0, 0, 12);
 }
