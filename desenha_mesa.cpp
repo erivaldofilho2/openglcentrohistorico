@@ -10,7 +10,7 @@ unsigned int Desenho::desenha_mesa (float pos_x, float pos_y, float pos_z) {
     float perna_mesa_altura = 0.7;
     float perna_mesa_lado = 0.05;
     float perna_mesa_largura = 0.1;
-    float mesa_altura = perna_mesa_altura + mesa_espessura/2;
+    float mesa_altura = perna_mesa_altura + mesa_espessura / 2;
     
     /* inicia a composicao da mesa */
     unsigned int mesa = glGenLists (1);
@@ -18,22 +18,22 @@ unsigned int Desenho::desenha_mesa (float pos_x, float pos_y, float pos_z) {
 
     // perna direita
     glColor3f ( cor_mesa_pernas[0], cor_mesa_pernas[1], cor_mesa_pernas[2] );
-    gl.define_deslocamento (mesa_comprimento/2 - perna_mesa_lado, perna_mesa_altura/2, -perna_mesa_largura);
+    gl.define_deslocamento (mesa_comprimento / 2 - perna_mesa_lado, perna_mesa_altura / 2, -perna_mesa_largura);
     gl.define_escala (perna_mesa_lado, perna_mesa_altura, perna_mesa_largura);
     gl.define_rotacao (0, 0, 0, 0);
     gl.desenha_cubo();
     // base
-    gl.define_deslocamento (mesa_comprimento/2 - perna_mesa_lado, 0, 0);
-    gl.define_escala (perna_mesa_lado+0.01, perna_mesa_lado, mesa_largura);
+    gl.define_deslocamento (mesa_comprimento / 2 - perna_mesa_lado, perna_mesa_lado / 2, 0);
+    gl.define_escala (perna_mesa_lado + 0.01, perna_mesa_lado, mesa_largura);
     gl.desenha_cubo();
     
     // perna esquerda
-    gl.define_deslocamento (-mesa_comprimento/2 + perna_mesa_lado, perna_mesa_altura/2, -perna_mesa_largura);
+    gl.define_deslocamento (-mesa_comprimento / 2 + perna_mesa_lado, perna_mesa_altura/2, -perna_mesa_largura);
     gl.define_escala (perna_mesa_lado, perna_mesa_altura, perna_mesa_largura);
     gl.desenha_cubo();
     // base
-    gl.define_deslocamento (-mesa_comprimento/2 + perna_mesa_lado, 0, 0);
-    gl.define_escala (perna_mesa_lado+0.01, perna_mesa_lado, mesa_largura);
+    gl.define_deslocamento (-mesa_comprimento / 2 + perna_mesa_lado, perna_mesa_lado / 2, 0);
+    gl.define_escala (perna_mesa_lado + 0.01, perna_mesa_lado, mesa_largura);
     gl.desenha_cubo();
     
     // tampo da mesa
