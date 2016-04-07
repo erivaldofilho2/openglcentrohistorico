@@ -23,6 +23,7 @@ float deltaMove = 0.0;
 float lateralMove = 0.0;
 float deltaAngle = 0.0;
 float verticalMove = 0.0;
+float aberturaPorta = 0;
 
 // Essa função é chamada quando alguma dimensão da janela é alterada
 void remodelar (int largura, int altura){
@@ -179,6 +180,16 @@ void teclado(unsigned char key, int x, int y){
     case 'F':
         verticalMove = -0.1;
         break;
+    case 'O':
+    case 'o':
+        if (aberturaPorta <= 90 - 3)
+            aberturaPorta += 3;
+        break;
+    case 'P':
+    case 'p':
+        if (aberturaPorta >= 3)
+            aberturaPorta -= 3;
+        break;
     case '1':
         vetor_y = 0;
         y = 10;
@@ -188,6 +199,7 @@ void teclado(unsigned char key, int x, int y){
         exit(0);
         break;
     }
+    predio = desenhista.desenha_predio (0, 0, 0, aberturaPorta);
     glutPostRedisplay();
 }
 
@@ -200,7 +212,7 @@ void inicializa() {
      * o valor de profundidade já armazenado
      */
     glEnable (GL_DEPTH_TEST);
-    predio = desenhista.desenha_predio (0, 0, 0);
+    predio = desenhista.desenha_predio (0, 0, 0, aberturaPorta);
     mesa = desenhista.desenha_mesa (0, 0, 10);
     cadeira = desenhista.desenha_cadeira (0, 0, 12);
 }

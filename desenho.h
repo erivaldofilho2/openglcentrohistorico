@@ -4,6 +4,10 @@
 #include <GL/glut.h>
 #include <cmath>
 
+#ifndef PI
+#define PI 3.1415926535897932
+#endif
+
 /*
  * Classe com funções que desenham objetos
  */
@@ -11,7 +15,7 @@ class Desenho
 {
 public:
     Desenho (float _proporcao = 3) {proporcao = _proporcao;}
-    unsigned int desenha_predio (float x, float y, float z);
+    unsigned int desenha_predio (float x, float y, float z, float angulo);
     unsigned int desenha_mesa (float x, float y, float z);
     unsigned int desenha_cadeira (float x, float y, float z);
     // unsigned int desenha_quadro_branco (float x, float y, float z);
