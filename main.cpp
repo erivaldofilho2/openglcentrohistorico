@@ -216,11 +216,21 @@ void inicializa() {
      * o valor de profundidade já armazenado
      */
     glEnable (GL_DEPTH_TEST);
+    float parede_largura = proporcao * 0.1;
+    float frontal_comprimento = proporcao * 15.0;
+    float frontal_altura = proporcao * 6.5;
+    float lateral_comprimento = proporcao * 7.0;
+    float lateral_altura = proporcao * 5.0;
+    float entrada_garagem_altura = proporcao * 2.7;
+    float entrada_garagem_largura = proporcao * 4;
+    float portao_garagem_altura = proporcao * 2.2;
+    float portao_garagem_lagura = proporcao * 1;
+    float portao_garagem_espessura = proporcao * 0.05;
     predio = desenhista.desenha_predio (0, 0, 0, aberturaPorta);
-    mesa = desenhista.desenha_mesa (0, 0, 10);
-    cadeira = desenhista.desenha_cadeira (0, 0, 12);
-    quadro = desenhista.desenha_quadro (0, 1, 6);
-    computador = desenhista.desenha_computador (0, proporcao * 0.9, 10);
+    mesa = desenhista.desenha_mesa (0, 0, -lateral_comprimento+4);
+    cadeira = desenhista.desenha_cadeira (0, 0, -lateral_comprimento+6);
+    quadro = desenhista.desenha_quadro (0, 1, -lateral_comprimento+parede_largura/2);
+    computador = desenhista.desenha_computador (0, proporcao * 0.9, -lateral_comprimento+4);
 }
 
 int main (int argc,char **argv){
