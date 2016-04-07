@@ -20,6 +20,7 @@ unsigned int Desenho::desenha_mesa (float pos_x, float pos_y, float pos_z) {
     glColor3f ( cor_mesa_pernas[0], cor_mesa_pernas[1], cor_mesa_pernas[2] );
     gl.define_deslocamento (mesa_comprimento/2 - perna_mesa_lado, perna_mesa_altura/2, -perna_mesa_largura);
     gl.define_escala (perna_mesa_lado, perna_mesa_altura, perna_mesa_largura);
+    gl.define_rotacao (0, 0, 0, 0);
     gl.desenha_cubo();
     // base
     gl.define_deslocamento (mesa_comprimento/2 - perna_mesa_lado, 0, 0);
