@@ -16,7 +16,7 @@ unsigned int Desenho::desenha_predio (float pos_x, float pos_y, float pos_z, flo
     float entrada_garagem_altura = 2.7;
     float entrada_garagem_largura = 4;
     float portao_garagem_altura = 2.2;
-    float portao_garagem_lagura = 2;
+    float portao_garagem_lagura = 1;
     float portao_garagem_espessura = 0.05;
 
     /* inicia a composicao do predio */
@@ -102,18 +102,18 @@ unsigned int Desenho::desenha_predio (float pos_x, float pos_y, float pos_z, flo
     // entrada da garagem
     /// lado esquerdo
     glColor3f ( cor_parede[0], cor_parede[1], cor_parede[2] );
-    gl.define_deslocamento (frontal_comprimento / 2 + (entrada_garagem_largura / 2 + 0.4 - portao_garagem_lagura / 2) / 2, entrada_garagem_altura / 2, 0);
-    gl.define_escala (entrada_garagem_largura / 2 + 0.4 - portao_garagem_lagura / 2, entrada_garagem_altura, parede_largura);
+    gl.define_deslocamento (frontal_comprimento / 2 + (entrada_garagem_largura / 2 + 0.4 - portao_garagem_lagura) / 2, entrada_garagem_altura / 2, 0);
+    gl.define_escala (entrada_garagem_largura / 2 + 0.4 - portao_garagem_lagura, entrada_garagem_altura, parede_largura);
     gl.define_rotacao (0, 0, 0, 0);
     gl.desenha_cubo();
     ///lado direito
-    gl.define_deslocamento (frontal_comprimento / 2 + (3*entrada_garagem_largura / 2 + 0.4 + portao_garagem_lagura / 2) / 2, entrada_garagem_altura / 2, 0);
-    gl.define_escala (entrada_garagem_largura - (entrada_garagem_largura / 2 + 0.4 + portao_garagem_lagura / 2), entrada_garagem_altura, parede_largura);
+    gl.define_deslocamento (frontal_comprimento / 2 + (3*entrada_garagem_largura / 2 + 0.4 + portao_garagem_lagura) / 2, entrada_garagem_altura / 2, 0);
+    gl.define_escala (entrada_garagem_largura - (entrada_garagem_largura / 2 + 0.4 + portao_garagem_lagura), entrada_garagem_altura, parede_largura);
     gl.define_rotacao (0, 0, 0, 0);
     gl.desenha_cubo();
     /// lado superior
     gl.define_deslocamento (frontal_comprimento / 2 + entrada_garagem_largura / 2 + 0.4, (entrada_garagem_altura + portao_garagem_altura) / 2, 0);
-    gl.define_escala (portao_garagem_lagura, entrada_garagem_altura - portao_garagem_altura, parede_largura);
+    gl.define_escala (portao_garagem_lagura * 2, entrada_garagem_altura - portao_garagem_altura, parede_largura);
     gl.define_rotacao (0, 0, 0, 0);
     gl.desenha_cubo();
     // contorno sobre o muro
@@ -125,8 +125,18 @@ unsigned int Desenho::desenha_predio (float pos_x, float pos_y, float pos_z, flo
     glColor3f ( cor_parede[0], cor_parede[1], cor_parede[2] );
 
     // portão da garagem
+    /// portão 1
     glColor3f ( cor_portao[0], cor_portao[1], cor_portao[2] );
-    gl.define_deslocamento ( (frontal_comprimento / 2 + entrada_garagem_largura / 2 + 0.4) + (1 - entrada_garagem_largura*cos(aberturaPorta*PI/180)/4), portao_garagem_altura / 2, -sin(aberturaPorta*PI/180));
+    x = frontal_comprimento / 2 + entrada_garagem_largura / 2 + 0.4;
+    x += -1 + portao_garagem_lagura * cos (aberturaPorta * PI / 180) / 2;
+    gl.define_deslocamento ( x, portao_garagem_altura / 2, -sin (aberturaPorta * PI / 180) / 2 );
+    gl.define_escala (portao_garagem_lagura, portao_garagem_altura, portao_garagem_espessura);
+    gl.define_rotacao ( aberturaPorta, 0, 1, 0);
+    gl.desenha_cubo();
+    /// portão 2
+    x = frontal_comprimento / 2 + entrada_garagem_largura / 2 + 0.4;
+    x += 1 - portao_garagem_lagura * cos (aberturaPorta * PI / 180) / 2;
+    gl.define_deslocamento ( x, portao_garagem_altura / 2, -sin (aberturaPorta * PI / 180) / 2 );
     gl.define_escala (portao_garagem_lagura, portao_garagem_altura, portao_garagem_espessura);
     gl.define_rotacao (-aberturaPorta, 0, 1, 0);
     gl.desenha_cubo();
