@@ -18,7 +18,8 @@ public:
     unsigned int desenha_predio (float x, float y, float z, float angulo);
     unsigned int desenha_mesa (float x, float y, float z);
     unsigned int desenha_cadeira (float x, float y, float z);
-    // unsigned int desenha_quadro_branco (float x, float y, float z);
+    unsigned int desenha_quadro (float x, float y, float z);
+    unsigned int desenha_computador (float x, float y, float z);
 
 private:
     unsigned int desenha_janela (float x, float y, float z);
@@ -31,11 +32,6 @@ private:
   */
 class Desenha_gl
 {
-private:
-    float x, y, z, proporcao;
-    float desloc_x, desloc_y, desloc_z;
-    float escala_x, escala_y, escala_z;
-    float angulo, vetor_x, vetor_y, vetor_z;
 public:
     Desenha_gl (float pos_x, float pos_y, float pos_z, float _proporcao){
         x = pos_x; y = pos_y; z = pos_z; proporcao = _proporcao;
@@ -65,6 +61,11 @@ public:
         glutSolidCube (proporcao);
         glPopMatrix();
     }
+private:
+    float x, y, z, proporcao;
+    float desloc_x, desloc_y, desloc_z;
+    float escala_x, escala_y, escala_z;
+    float angulo, vetor_x, vetor_y, vetor_z;
 };
 
 #endif
