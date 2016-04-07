@@ -13,6 +13,8 @@
 unsigned int predio;
 unsigned int mesa;
 unsigned int cadeira;
+unsigned int quadro;
+unsigned int computador;
 //// Fim de indentificadores de lista de chamadas
 
 float proporcao = 2.5;
@@ -111,6 +113,8 @@ void exibir(void){
     glCallList(predio);
     glCallList(mesa);
     glCallList(cadeira);
+    glCallList(quadro);
+    glCallList(computador);
     //// FIM DE DESENHO DE OBJETOS
     
     // desempilha matriz anterior à chamada da função
@@ -215,6 +219,8 @@ void inicializa() {
     predio = desenhista.desenha_predio (0, 0, 0, aberturaPorta);
     mesa = desenhista.desenha_mesa (0, 0, 10);
     cadeira = desenhista.desenha_cadeira (0, 0, 12);
+    quadro = desenhista.desenha_quadro (0, 1, 6);
+    computador = desenhista.desenha_computador (0, proporcao * 0.9, 10);
 }
 
 int main (int argc,char **argv){
