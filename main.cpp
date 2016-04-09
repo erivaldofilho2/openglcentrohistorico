@@ -230,7 +230,7 @@ void inicializa() {
     mesa = desenhista.desenha_mesa (0, 0, -lateral_comprimento+4);
     cadeira = desenhista.desenha_cadeira (0, 0, -lateral_comprimento+6);
     quadro = desenhista.desenha_quadro (0, 1, -lateral_comprimento+parede_largura/2);
-    computador = desenhista.desenha_computador (0, proporcao * 0.9, -lateral_comprimento+4);
+    computador = desenhista.desenha_computador (0, proporcao * 0.8, -lateral_comprimento+4);
 }
 
 int main (int argc,char **argv){

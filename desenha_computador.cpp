@@ -20,20 +20,20 @@ unsigned int Desenho::desenha_computador (float pos_x, float pos_y, float pos_z)
     // computador
     glColor3f ( cor_computador[0], cor_computador[1], cor_computador[2] );
     //base
-    gl.define_deslocamento (computador_comprimento, computador_altura, computador_espessura);
+    gl.define_deslocamento (base_profundidade, base_altura, base_largura);
     gl.define_escala (base_profundidade, base_altura, base_largura);
     gl.define_rotacao (0, 0, 0, 0);
     gl.desenha_cubo();
 
     //suporte
-    gl.define_deslocamento (computador_comprimento, computador_altura+0.04, computador_espessura);
+    gl.define_deslocamento (base_profundidade, base_altura+0.04, base_largura);
     gl.define_escala (0.02, 0.1, 0.02);
     gl.define_rotacao (0, 0, 0, 0);
     gl.desenha_cubo();
 
     //Monitor
     glColor3f ( cor_monitor[0], cor_monitor[1], cor_monitor[2] );
-    gl.define_deslocamento (computador_comprimento, computador_altura+0.2, computador_espessura);
+    gl.define_deslocamento (base_profundidade, base_altura+0.16, base_largura);
     gl.define_escala (0.2, 0.15, 0.02);
     gl.define_rotacao (0, 0, 0, 0);
     gl.desenha_cubo();
