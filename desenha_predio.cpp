@@ -1,6 +1,6 @@
 #include "desenho.h"
 
-unsigned int Desenho::desenha_predio (float pos_x, float pos_y, float pos_z, float aberturaPorta = 0) {
+unsigned int Desenho::desenha_predio (float pos_x, float pos_y, float pos_z, float aberturaPorta = 0, float aberturaPortaLateral = 0) {
     Desenha_gl gl (pos_x, pos_y, pos_z, proporcao);
 
     // variáveis auxiliares de posição
@@ -45,8 +45,9 @@ unsigned int Desenho::desenha_predio (float pos_x, float pos_y, float pos_z, flo
         glVertex3f ( x, y, z);
         glVertex3f ( x, y, 0);
     glEnd();
+    glColor3f ( corParede[0], corParede[1], corParede[2] );
     // Desenha forro no interior do prédio
-    glColor3f (1, 1, 1);
+    //glColor3f (1, 1, 1);
     glBegin (GL_QUADS);
         y = proporcao * lateralAltura - 1;
         glVertex3f (-x, y, 0);
@@ -56,7 +57,6 @@ unsigned int Desenho::desenha_predio (float pos_x, float pos_y, float pos_z, flo
     glEnd();
     
     // parede frontal
-    glColor3f ( corParede[0], corParede[1], corParede[2] );
     gl.define_deslocamento (0, frontalAltura / 2, 0);
     gl.define_escala (frontalComp + paredeLargura, frontalAltura, paredeLargura);
     gl.define_rotacao (0, 0, 0, 0);
@@ -85,10 +85,40 @@ unsigned int Desenho::desenha_predio (float pos_x, float pos_y, float pos_z, flo
     gl.desenha_cubo();
 
     // parede lateral direita
+    /// parte de cima
+    y = (lateralAltura - portaLateralAltura) / 2;
+    y += portaLateralAltura;
     gl.define_deslocamento (frontalComp / 2, y, -lateralComp / 2);
-    gl.define_escala (lateralComp, lateralAltura, paredeLargura);
+    y = lateralAltura - portaLateralAltura;
+    gl.define_escala (lateralComp, y, paredeLargura);
     gl.define_rotacao (90, 0, 1, 0);
     gl.desenha_cubo();
+    /// parte esquerda
+    y = portaLateralAltura / 2;
+    z = (-lateralComp + portaLateralLargura) / 4;
+    gl.define_deslocamento (frontalComp / 2, y, z);
+    gl.define_escala (z * 2, y * 2, paredeLargura);
+    gl.define_rotacao (90, 0, 1, 0);
+    gl.desenha_cubo();
+    /// parte direita
+    z = (-3*lateralComp - portaLateralLargura) / 4;
+    gl.define_deslocamento (frontalComp / 2, y, z);
+    z = (-lateralComp + portaLateralLargura) / 4;
+    gl.define_escala (z * 2, y * 2, paredeLargura);
+    gl.define_rotacao (90, 0, 1, 0);
+    gl.desenha_cubo();
+
+    // porta lateral
+    glColor3f ( corPortao[0], corPortao[1], corPortao[2] );
+    x = frontalComp / 2 + portaLateralLargura * (cos (aberturaPortaLateral * PI / 180) - 1) / 2;
+    y = portaLateralAltura / 2;
+    z = -lateralComp / 2 + portaLateralLargura * sin (aberturaPortaLateral * PI / 180) / 2;
+    gl.define_deslocamento (x, y, z);
+    gl.define_escala (portaLateralLargura, portaLateralAltura, portaLateralEspessura);
+    gl.define_rotacao (90 + aberturaPortaLateral, 0, 1, 0);
+    gl.desenha_cubo();
+    glColor3f ( corParede[0], corParede[1], corParede[2] );
+
 
     // parede lateral da garagem
     x = frontalComp / 2 + entradaGaragemLargura;

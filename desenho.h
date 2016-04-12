@@ -15,7 +15,7 @@ class Desenho
 {
 public:
     Desenho (float _proporcao = 3) {proporcao = _proporcao;}
-    unsigned int desenha_predio (float x, float y, float z, float angulo);
+    unsigned int desenha_predio (float x, float y, float z, float anguloPortaGaragem, float anguloPortaLateral);
     unsigned int desenha_mesa (float x, float y, float z);
     unsigned int desenha_cadeira (float x, float y, float z);
     unsigned int desenha_quadro (float x, float y, float z);

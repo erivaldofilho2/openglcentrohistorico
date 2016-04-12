@@ -11,8 +11,8 @@
 
 //// Início de indentificadores de lista de chamadas
 unsigned int predio;
-unsigned int mesa;
-unsigned int cadeira;
+unsigned int mesa[9];
+unsigned int cadeira[9];
 unsigned int quadro;
 unsigned int computador;
 //// Fim de indentificadores de lista de chamadas
@@ -26,6 +26,7 @@ float lateralMove = 0.0;
 float deltaAngle = 0.0;
 float verticalMove = 0.0;
 float aberturaPorta = 0;
+float aberturaPortaLateral = 0;
 
 // Essa função é chamada quando alguma dimensão da janela é alterada
 void remodelar (int largura, int altura){
@@ -111,8 +112,10 @@ void exibir(void){
 
     //// INICIO DESENHO DE OBJETOS
     glCallList(predio);
-    glCallList(mesa);
-    glCallList(cadeira);
+    for (int i = 0; i < 9; ++i) {
+        glCallList(mesa[i]);
+        glCallList(cadeira[i]);
+    }
     glCallList(quadro);
     glCallList(computador);
     //// FIM DE DESENHO DE OBJETOS
@@ -194,6 +197,16 @@ void teclado(unsigned char key, int x, int y){
         if (aberturaPorta >= 3)
             aberturaPorta -= 3;
         break;
+    case 'K':
+    case 'k':
+        if (aberturaPortaLateral <= 90 - 3)
+            aberturaPortaLateral += 3;
+        break;
+    case 'L':
+    case 'l':
+        if (aberturaPortaLateral >= 3)
+            aberturaPortaLateral -= 3;
+        break;
     case '1':
         vetor_y = 0;
         y = 10;
@@ -203,7 +216,7 @@ void teclado(unsigned char key, int x, int y){
         exit(0);
         break;
     }
-    predio = desenhista.desenha_predio (0, 0, 0, aberturaPorta);
+    predio = desenhista.desenha_predio (0, 0, 0, aberturaPorta, aberturaPortaLateral);
     glutPostRedisplay();
 }
 
@@ -217,18 +230,39 @@ void inicializa() {
      */
     glEnable (GL_DEPTH_TEST);
     float parede_largura = proporcao * 0.1;
-    float frontal_comprimento = proporcao * 15.0;
-    float frontal_altura = proporcao * 6.5;
+    // float frontal_comprimento = proporcao * 15.0;
+    // float frontal_altura = proporcao * 6.5;
     float lateral_comprimento = proporcao * 7.0;
-    float lateral_altura = proporcao * 5.0;
-    float entrada_garagem_altura = proporcao * 2.7;
-    float entrada_garagem_largura = proporcao * 4;
-    float portao_garagem_altura = proporcao * 2.2;
-    float portao_garagem_lagura = proporcao * 1;
-    float portao_garagem_espessura = proporcao * 0.05;
-    predio = desenhista.desenha_predio (0, 0, 0, aberturaPorta);
-    mesa = desenhista.desenha_mesa (0, 0, -lateral_comprimento+4);
-    cadeira = desenhista.desenha_cadeira (0, 0, -lateral_comprimento+6);
+    // float lateral_altura = proporcao * 5.0;
+    // float entrada_garagem_altura = proporcao * 2.7;
+    // float entrada_garagem_largura = proporcao * 4;
+    // float portao_garagem_altura = proporcao * 2.2;
+    // float portao_garagem_lagura = proporcao * 1;
+    // float portao_garagem_espessura = proporcao * 0.05;
+    float mesa_largura = proporcao * (0.5*3);
+    predio = desenhista.desenha_predio (0, 0, 0, aberturaPorta, aberturaPortaLateral);
+    // mesas e cadeiras
+    mesa[0] = desenhista.desenha_mesa (-mesa_largura, 0, -lateral_comprimento+4);
+    cadeira[0] = desenhista.desenha_cadeira (-mesa_largura, 0, -lateral_comprimento+6);
+    mesa[1] = desenhista.desenha_mesa (0, 0, -lateral_comprimento+4);
+    cadeira[1] = desenhista.desenha_cadeira (0, 0, -lateral_comprimento+6);
+    mesa[2] = desenhista.desenha_mesa (mesa_largura, 0, -lateral_comprimento+4);
+    cadeira[2] = desenhista.desenha_cadeira (mesa_largura, 0, -lateral_comprimento+6);
+
+    mesa[3] = desenhista.desenha_mesa (-mesa_largura, 0, -lateral_comprimento+4+mesa_largura);
+    cadeira[3] = desenhista.desenha_cadeira (-mesa_largura, 0, -lateral_comprimento+6+mesa_largura);
+    mesa[4] = desenhista.desenha_mesa (0, 0, -lateral_comprimento+4+mesa_largura);
+    cadeira[4] = desenhista.desenha_cadeira (0, 0, -lateral_comprimento+6+mesa_largura);
+    mesa[5] = desenhista.desenha_mesa (mesa_largura, 0, -lateral_comprimento+4+mesa_largura);
+    cadeira[5] = desenhista.desenha_cadeira (mesa_largura, 0, -lateral_comprimento+6+mesa_largura);
+
+    mesa[6] = desenhista.desenha_mesa (-mesa_largura, 0, -lateral_comprimento+4+mesa_largura*2);
+    cadeira[6] = desenhista.desenha_cadeira (-mesa_largura, 0, -lateral_comprimento+6+mesa_largura*2);
+    mesa[7] = desenhista.desenha_mesa (0, 0, -lateral_comprimento+4+mesa_largura*2);
+    cadeira[7] = desenhista.desenha_cadeira (0, 0, -lateral_comprimento+6+mesa_largura*2);
+    mesa[8] = desenhista.desenha_mesa (mesa_largura, 0, -lateral_comprimento+4+mesa_largura*2);
+    cadeira[8] = desenhista.desenha_cadeira (mesa_largura, 0, -lateral_comprimento+6+mesa_largura*2);
+    // fim mesas e cadeiras
     quadro = desenhista.desenha_quadro (0, 1, -lateral_comprimento+parede_largura/2);
     computador = desenhista.desenha_computador (0, proporcao * 0.8, -lateral_comprimento+4);
 }
