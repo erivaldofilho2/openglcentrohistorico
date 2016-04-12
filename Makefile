@@ -1,18 +1,18 @@
 # Compila e executa com o comando 'make' (construtor automático)
 FONTE=main.cpp\
-              desenha_predio.cpp\
-              desenha_janela.cpp\
-              desenha_mesa.cpp\
-              desenha_cadeira.cpp\
-              desenha_quadro.cpp\
-              desenha_computador.cpp
+      predio.cpp\
+      janela.cpp\
+      mesa.cpp\
+      cadeira.cpp\
+      quadro.cpp\
+      computador.cpp
 OBJETO=main.o\
-               desenha_predio.o\
-               desenha_janela.o\
-               desenha_mesa.o\
-               desenha_cadeira.o\
-               desenha_quadro.o\
-               desenha_computador.o
+       predio.o\
+       janela.o\
+       mesa.o\
+       cadeira.o\
+       quadro.o\
+       computador.o
 APP=centro_historico.app
 
 CC=g++

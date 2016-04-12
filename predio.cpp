@@ -19,7 +19,7 @@ unsigned int Desenho::desenha_predio (float pos_x, float pos_y, float pos_z, flo
     float portaoGaragemLargura = 1;
     float portaoGaragemEspessura = 0.05;
     float portaLateralAltura = 2;
-    float portaLateralLargura = 0.8;
+    float portaLateralLargura = 1;
     float portaLateralEspessura = 0.03;
 
     /* inicia a composicao do predio */
