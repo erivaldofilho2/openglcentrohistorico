@@ -2,46 +2,87 @@
 
 unsigned int Desenho::desenha_bancada (float pos_x, float pos_y, float pos_z) {
     Desenha_gl gl (pos_x, pos_y, pos_z, proporcao);
-    float cor_mesa[3] = {0x56/256.0, 0x56/256.0, 0x56/256.0};
-    float cor_mesa_pernas[3] = {0x27/256.0, 0x28/256.0, 0x22/256.0};
-    float mesa_comprimento = 1;
-    float mesa_largura = 0.5;
-    float mesa_espessura = 0.05;
-    float perna_mesa_altura = 0.7;
-    float perna_mesa_lado = 0.05;
-    float perna_mesa_largura = 0.1;
-    float mesa_altura = perna_mesa_altura + mesa_espessura / 2;
+    float corMadeira[3] = {0x5f/256.0, 0x1d/256.0, 0x07/256.0};
+    float corMarmore[3] = {0x35/256.0, 0x35/256.0, 0x35/256.0};
+    float mesaComp = 2.2;
+    float mesaLargura = 1;
+    float mesaEspessura = 0.07;
+    float pernaMesaAltura = 0.82;
+    float pernaMesaLado = 0.07;
+    float mesaAltura = pernaMesaAltura + mesaEspessura / 2;
+    float x, y, z;
     
-    /* inicia a composicao da mesa */
-    unsigned int mesa = glGenLists (1);
-    glNewList (mesa, GL_COMPILE);
+    /* inicia a composicao da bancada */
+    unsigned int bancada = glGenLists (1);
+    glNewList (bancada, GL_COMPILE);
 
-    // perna direita
-    glColor3f ( cor_mesa_pernas[0], cor_mesa_pernas[1], cor_mesa_pernas[2] );
-    gl.define_deslocamento (mesa_comprimento / 2 - perna_mesa_lado, perna_mesa_altura / 2, -perna_mesa_largura);
-    gl.define_escala (perna_mesa_lado, perna_mesa_altura, perna_mesa_largura);
+    // duas pernas direitas
+    x = mesaComp / 2 - pernaMesaLado / 2;
+    y = pernaMesaAltura / 2;
+    z = mesaLargura/2 - pernaMesaLado/2;
+    glColor3f ( corMadeira[0], corMadeira[1], corMadeira[2] );
     gl.define_rotacao (0, 0, 0, 0);
+    gl.define_escala (pernaMesaLado, pernaMesaAltura, pernaMesaLado);
+    gl.define_deslocamento (x, y, -z);
     gl.desenha_cubo();
-    // base
-    gl.define_deslocamento (mesa_comprimento / 2 - perna_mesa_lado, perna_mesa_lado / 2, 0);
-    gl.define_escala (perna_mesa_lado + 0.01, perna_mesa_lado, mesa_largura);
+    gl.define_deslocamento (x, y,  z);
     gl.desenha_cubo();
     
-    // perna esquerda
-    gl.define_deslocamento (-mesa_comprimento / 2 + perna_mesa_lado, perna_mesa_altura/2, -perna_mesa_largura);
-    gl.define_escala (perna_mesa_lado, perna_mesa_altura, perna_mesa_largura);
+    // duas pernas esquerdas
+    gl.define_deslocamento (-x, y, -z);
     gl.desenha_cubo();
-    // base
-    gl.define_deslocamento (-mesa_comprimento / 2 + perna_mesa_lado, perna_mesa_lado / 2, 0);
-    gl.define_escala (perna_mesa_lado + 0.01, perna_mesa_lado, mesa_largura);
+    gl.define_deslocamento (-x, y,  z);
     gl.desenha_cubo();
+
+    // base horizontal
+    x = 0;
+    y = pernaMesaAltura - pernaMesaLado / 2;
+    z = mesaLargura / 2 - pernaMesaLado / 2;
+    gl.define_escala (mesaComp, pernaMesaLado, 0.03);
+    gl.define_deslocamento (x, y, -z);
+    gl.desenha_cubo(); // primeira base de maior comprimento
+    gl.define_deslocamento (x, y,  z);
+    gl.desenha_cubo(); // segunda base de maior comprimento
+    y = 0.2;
+    z = 0;
+    gl.define_escala (mesaComp-pernaMesaLado/2, pernaMesaLado, 0.03);
+    gl.define_deslocamento (x, y, z);
+    gl.desenha_cubo(); // base próxima ao chão de maior comprimento
+    x = mesaComp / 2 - pernaMesaLado / 2;
+    y = pernaMesaAltura - pernaMesaLado / 2;
+    z = 0;
+    gl.define_escala (0.03, pernaMesaLado, mesaLargura);
+    gl.define_deslocamento (-x, y, -z);
+    gl.desenha_cubo(); // primeira base de menor comprimento
+    gl.define_deslocamento ( x, y, -z);
+    gl.desenha_cubo(); // segunda base de menor comprimento
+    y = 0.2;
+    gl.define_deslocamento (-x, y, -z);
+    gl.desenha_cubo(); // primeira base próxima ao chão de menor comprimento
+    gl.define_deslocamento ( x, y, -z);
+    gl.desenha_cubo(); // segunda base próxima ao chão de menor comprimento
     
     // tampo da mesa
-    glColor3f (cor_mesa[0], cor_mesa[1], cor_mesa[2]);
-    gl.define_deslocamento (0, mesa_altura, 0);
-    gl.define_escala (mesa_comprimento, mesa_espessura, mesa_largura);
+    glColor3f (corMarmore[0], corMarmore[1], corMarmore[2]);
+    gl.define_deslocamento (0, mesaAltura, 0);
+    gl.define_escala (mesaComp, mesaEspessura, mesaLargura);
     gl.desenha_cubo();
 
+    // borda ao redor do tampo
+    glColor3f ( corMadeira[0], corMadeira[1], corMadeira[2] );
+    z = (mesaLargura+0.03) / 2;
+    gl.define_escala (mesaComp+0.03, mesaEspessura, 0.03);
+    gl.define_deslocamento (0, mesaAltura, -z);
+    gl.desenha_cubo(); // borda de comprimento maior
+    gl.define_deslocamento (0, mesaAltura,  z);
+    gl.desenha_cubo(); // borda de comprimento maior
+    x = mesaComp/2;
+    gl.define_escala (0.03, mesaEspessura, mesaLargura);
+    gl.define_deslocamento (-x, mesaAltura, 0);
+    gl.desenha_cubo(); // borda de comprimento menor
+    gl.define_deslocamento ( x, mesaAltura, 0);
+    gl.desenha_cubo(); // borda de comprimento menor
+
     glEndList();
-    return mesa;
+    return bancada;
 }
