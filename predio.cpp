@@ -47,9 +47,8 @@ unsigned int Desenho::desenha_predio (float pos_x, float pos_y, float pos_z, flo
     glEnd();
     glColor3f ( corParede[0], corParede[1], corParede[2] );
     // Desenha forro no interior do prédio
-    //glColor3f (1, 1, 1);
     glBegin (GL_QUADS);
-        y = proporcao * lateralAltura - 1;
+        y = proporcao * (lateralAltura - 0.1);
         glVertex3f (-x, y, 0);
         glVertex3f (-x, y, z);
         glVertex3f ( x, y, z);
@@ -366,6 +365,29 @@ unsigned int Desenho::desenha_predio (float pos_x, float pos_y, float pos_z, flo
         y = proporcao * lateralAltura;
         glVertex3f (x, y, z);
     glEnd();
+
+    // desenha lâmpadas
+    x = -6;
+    y =lateralAltura - 0.1;
+    z = lateralComp / 2;
+    gl.define_escala (1.2, 0.03, 0.03);
+    gl.define_rotacao (0, 0, 0, 0);
+    for (x = -6; x <= 6; x += 3) {
+        for (z = lateralComp / 2 - 3; z <= lateralComp / 2 + 3; z += 3) {
+            glColor3f (1, 1, 1);
+            gl.define_deslocamento (x, y, -z-0.03);
+            gl.desenha_cubo();
+            gl.define_deslocamento (x, y, -z+0.03);
+            gl.desenha_cubo();
+            glColor3f (0.8, 0.8, 0.8);
+            glBegin (GL_POLYGON);
+                glVertex3f (pos_x+proporcao*(x-0.7), pos_y+proporcao*(y-0.01), pos_z+proporcao*(-z-0.08));
+                glVertex3f (pos_x+proporcao*(x-0.7), pos_y+proporcao*(y-0.01), pos_z+proporcao*(-z+0.08));
+                glVertex3f (pos_x+proporcao*(x+0.7), pos_y+proporcao*(y-0.01), pos_z+proporcao*(-z+0.08));
+                glVertex3f (pos_x+proporcao*(x+0.7), pos_y+proporcao*(y-0.01), pos_z+proporcao*(-z-0.08));
+            glEnd();
+        }
+    }
 
     glEndList();
     return predio;

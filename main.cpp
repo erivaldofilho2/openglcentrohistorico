@@ -15,6 +15,7 @@ unsigned int mesa[9];
 unsigned int cadeira[9];
 unsigned int quadro;
 unsigned int computador;
+unsigned int bancada[3];
 //// Fim de indentificadores de lista de chamadas
 
 float proporcao = 2.5;
@@ -118,6 +119,8 @@ void exibir(void){
     }
     glCallList(quadro);
     glCallList(computador);
+    glCallList(bancada[0]);
+    glCallList(bancada[1]);
     //// FIM DE DESENHO DE OBJETOS
     
     // desempilha matriz anterior à chamada da função
@@ -242,29 +245,31 @@ void inicializa() {
     float mesa_largura = proporcao * (0.5*3);
     predio = desenhista.desenha_predio (0, 0, 0, aberturaPorta, aberturaPortaLateral);
     // mesas e cadeiras
-    mesa[0] = desenhista.desenha_mesa (-mesa_largura, 0, -lateral_comprimento+4);
-    cadeira[0] = desenhista.desenha_cadeira (-mesa_largura, 0, -lateral_comprimento+6);
-    mesa[1] = desenhista.desenha_mesa (0, 0, -lateral_comprimento+4);
-    cadeira[1] = desenhista.desenha_cadeira (0, 0, -lateral_comprimento+6);
-    mesa[2] = desenhista.desenha_mesa (mesa_largura, 0, -lateral_comprimento+4);
-    cadeira[2] = desenhista.desenha_cadeira (mesa_largura, 0, -lateral_comprimento+6);
+    mesa[0] = desenhista.desenha_mesa (-mesa_largura, 0, -lateral_comprimento+6);
+    cadeira[0] = desenhista.desenha_cadeira (-mesa_largura, 0, -lateral_comprimento+8);
+    mesa[1] = desenhista.desenha_mesa (0, 0, -lateral_comprimento+6);
+    cadeira[1] = desenhista.desenha_cadeira (0, 0, -lateral_comprimento+8);
+    mesa[2] = desenhista.desenha_mesa (mesa_largura, 0, -lateral_comprimento+6);
+    cadeira[2] = desenhista.desenha_cadeira (mesa_largura, 0, -lateral_comprimento+8);
 
-    mesa[3] = desenhista.desenha_mesa (-mesa_largura, 0, -lateral_comprimento+4+mesa_largura);
-    cadeira[3] = desenhista.desenha_cadeira (-mesa_largura, 0, -lateral_comprimento+6+mesa_largura);
-    mesa[4] = desenhista.desenha_mesa (0, 0, -lateral_comprimento+4+mesa_largura);
-    cadeira[4] = desenhista.desenha_cadeira (0, 0, -lateral_comprimento+6+mesa_largura);
-    mesa[5] = desenhista.desenha_mesa (mesa_largura, 0, -lateral_comprimento+4+mesa_largura);
-    cadeira[5] = desenhista.desenha_cadeira (mesa_largura, 0, -lateral_comprimento+6+mesa_largura);
+    mesa[3] = desenhista.desenha_mesa (-mesa_largura, 0, -lateral_comprimento+6+mesa_largura);
+    cadeira[3] = desenhista.desenha_cadeira (-mesa_largura, 0, -lateral_comprimento+8+mesa_largura);
+    mesa[4] = desenhista.desenha_mesa (0, 0, -lateral_comprimento+6+mesa_largura);
+    cadeira[4] = desenhista.desenha_cadeira (0, 0, -lateral_comprimento+8+mesa_largura);
+    mesa[5] = desenhista.desenha_mesa (mesa_largura, 0, -lateral_comprimento+6+mesa_largura);
+    cadeira[5] = desenhista.desenha_cadeira (mesa_largura, 0, -lateral_comprimento+8+mesa_largura);
 
-    mesa[6] = desenhista.desenha_mesa (-mesa_largura, 0, -lateral_comprimento+4+mesa_largura*2);
-    cadeira[6] = desenhista.desenha_cadeira (-mesa_largura, 0, -lateral_comprimento+6+mesa_largura*2);
-    mesa[7] = desenhista.desenha_mesa (0, 0, -lateral_comprimento+4+mesa_largura*2);
-    cadeira[7] = desenhista.desenha_cadeira (0, 0, -lateral_comprimento+6+mesa_largura*2);
-    mesa[8] = desenhista.desenha_mesa (mesa_largura, 0, -lateral_comprimento+4+mesa_largura*2);
-    cadeira[8] = desenhista.desenha_cadeira (mesa_largura, 0, -lateral_comprimento+6+mesa_largura*2);
+    mesa[6] = desenhista.desenha_mesa (-mesa_largura, 0, -lateral_comprimento+6+mesa_largura*2);
+    cadeira[6] = desenhista.desenha_cadeira (-mesa_largura, 0, -lateral_comprimento+8+mesa_largura*2);
+    mesa[7] = desenhista.desenha_mesa (0, 0, -lateral_comprimento+6+mesa_largura*2);
+    cadeira[7] = desenhista.desenha_cadeira (0, 0, -lateral_comprimento+8+mesa_largura*2);
+    mesa[8] = desenhista.desenha_mesa (mesa_largura, 0, -lateral_comprimento+6+mesa_largura*2);
+    cadeira[8] = desenhista.desenha_cadeira (mesa_largura, 0, -lateral_comprimento+8+mesa_largura*2);
     // fim mesas e cadeiras
-    quadro = desenhista.desenha_quadro (0, 1, -lateral_comprimento+parede_largura/2);
-    computador = desenhista.desenha_computador (0, proporcao * 0.8, -lateral_comprimento+4);
+    quadro = desenhista.desenha_quadro (0, 0.5, -lateral_comprimento+parede_largura/2);
+    computador = desenhista.desenha_computador (0, proporcao * 0.8, -lateral_comprimento+6);
+    bancada[0] = desenhista.desenha_bancada (-15, 0, -lateral_comprimento+4);
+    bancada[1] = desenhista.desenha_bancada (-15, 0, -4);
 }
 
 int main (int argc,char **argv){
