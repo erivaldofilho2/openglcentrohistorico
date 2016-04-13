@@ -5,14 +5,16 @@ FONTE=main.cpp\
       mesa.cpp\
       cadeira.cpp\
       quadro.cpp\
-      computador.cpp
+      computador.cpp\
+      bancada.cpp
 OBJETO=main.o\
        predio.o\
        janela.o\
        mesa.o\
        cadeira.o\
        quadro.o\
-       computador.o
+       computador.o\
+       bancada.o
 APP=centro_historico.app
 
 CC=g++
