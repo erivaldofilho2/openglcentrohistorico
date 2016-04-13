@@ -20,6 +20,7 @@ public:
     unsigned int desenha_cadeira (float x, float y, float z);
     unsigned int desenha_quadro (float x, float y, float z);
     unsigned int desenha_computador (float x, float y, float z);
+    unsigned int desenha_bancada (float x, float y, float z);
 
 private:
     unsigned int desenha_janela (float x, float y, float z);
