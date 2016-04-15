@@ -13,8 +13,8 @@ unsigned int Desenho::desenha_mesa (float pos_x, float pos_y, float pos_z) {
     float mesa_altura = perna_mesa_altura + mesa_espessura / 2;
     
     /* inicia a composicao da mesa */
-    unsigned int mesa = glGenLists (1);
-    glNewList (mesa, GL_COMPILE);
+    // unsigned int mesa = glGenLists (1);
+    // glNewList (mesa, GL_COMPILE);
 
     // perna direita
     glColor3f ( cor_mesa_pernas[0], cor_mesa_pernas[1], cor_mesa_pernas[2] );
@@ -42,6 +42,6 @@ unsigned int Desenho::desenha_mesa (float pos_x, float pos_y, float pos_z) {
     gl.define_escala (mesa_comprimento, mesa_espessura, mesa_largura);
     gl.desenha_cubo();
 
-    glEndList();
-    return mesa;
+    // glEndList();
+    return 0;
 }

@@ -3,23 +3,20 @@
  */
 
 #include <cmath>
+#include <GL/gl.h>
+#include <GL/glu.h>
 #include <GL/glut.h>
 #include <iostream>
 #include "desenho.h"
+#include "iluminacao.hpp"
 
 #define PI 3.1415926535897932
 
-//// Início de indentificadores de lista de chamadas
-unsigned int predio;
-unsigned int mesa[9];
-unsigned int cadeira[9];
-unsigned int quadro;
-unsigned int computador;
-unsigned int bancada[3];
-//// Fim de indentificadores de lista de chamadas
+unsigned int modelagem; // indentificador de lista de chamada
 
 float proporcao = 2.5;
 Desenho desenhista (proporcao); // coleção de funções que desenha os objetos
+bool fullscreenmode = false;
 float vetor_x = 0.0, vetor_y = 0.0, vetor_z = -1.0; // vetor direção da câmera
 float x = 0.0 * proporcao, y = 1.7 * proporcao, z = 10.0 * proporcao; // posição da câmera
 float deltaMove = 0.0;
@@ -30,55 +27,12 @@ float aberturaPorta = 0;
 float aberturaPortaLateral = 0;
 
 // Essa função é chamada quando alguma dimensão da janela é alterada
-void remodelar (int largura, int altura){
+void reajusteJanela (int largura, int altura){
     glViewport (0, 0, largura, altura);
     glMatrixMode (GL_PROJECTION);
     glLoadIdentity();
     gluPerspective (80.0, largura / (float)altura, 0.1, 600.0);
     glMatrixMode (GL_MODELVIEW);
-}
-
-// Referência: http://www.inf.pucrs.br/~manssour/OpenGL/Iluminacao.html
-//iluminacao
-void iluminacao_externa(void)
-{
-    GLfloat luzAmbiente[4]={0.2,0.2,0.2,1.0}; 
-    GLfloat luzDifusa[4]={0.7,0.7,0.7,1.0};    // "cor" 
-    GLfloat luzEspecular[4]={1.0, 1.0, 1.0, 1.0};// "brilho" 
-    GLfloat posicaoLuz[4]={0.0, 50.0, 50.0, 1.0};
-
-    // Capacidade de brilho do material
-    GLfloat especularidade[4]={1.0,1.0,1.0,1.0}; 
-    GLint especMaterial = 60;
-
-    // Especifica que a cor de fundo da janela será preta
-    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-    
-    // Habilita o modelo de colorização de Gouraud
-    glShadeModel(GL_SMOOTH);
-
-    // Define a refletância do material 
-    glMaterialfv(GL_FRONT,GL_SPECULAR, especularidade);
-    // Define a concentração do brilho
-    glMateriali(GL_FRONT,GL_SHININESS,especMaterial);
-
-    // Ativa o uso da luz ambiente 
-    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, luzAmbiente);
-
-    // Define os parâmetros da luz de número 0
-    glLightfv(GL_LIGHT0, GL_AMBIENT, luzAmbiente); 
-    glLightfv(GL_LIGHT0, GL_DIFFUSE, luzDifusa );
-    glLightfv(GL_LIGHT0, GL_SPECULAR, luzEspecular );
-    glLightfv(GL_LIGHT0, GL_POSITION, posicaoLuz );
-
-    // Habilita a definição da cor do material a partir da cor corrente
-    glEnable(GL_COLOR_MATERIAL);
-    //Habilita o uso de iluminação
-    glEnable(GL_LIGHTING);  
-    // Habilita a luz de número 0
-    glEnable(GL_LIGHT0);
-    // Habilita o depth-buffering
-    glEnable(GL_DEPTH_TEST);
 }
 
 void exibir(void){
@@ -92,7 +46,7 @@ void exibir(void){
         z += lateralMove * (-cos(deltaAngle + PI / 2));
         lateralMove = 0;
     }
-    if (verticalMove) { // move camera no eixo vertical
+    if (verticalMove) { // vira a camera em torno do eixo vertical
         y += verticalMove;
         verticalMove = 0;
     }
@@ -102,8 +56,22 @@ void exibir(void){
     glShadeModel (GL_SMOOTH);
     glDepthMask (GL_TRUE);
     glClearColor (0.32,0.57,0.88,0);
-    glClear (GL_COLOR_BUFFER_BIT|GL_DEPTH_BUFFER_BIT);
+    glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glLoadIdentity(); // Reinicia matriz de transformação
+
+    // Escolha da iluminação
+    switch(ModoDeIluminacao)
+    {
+    case ESPECULAR:
+            defineLuzESPECULAR();
+            break;
+    case DIFUSA:
+            defineLuzDIFUSA();
+            break;
+    case AMBIENTE:
+            defineLuzAMBIENTE();
+            break;
+    }
 
     // empilha matriz atual (anterior à chamada da função)
     glPushMatrix();
@@ -112,15 +80,7 @@ void exibir(void){
     glShadeModel (GL_SMOOTH);
 
     //// INICIO DESENHO DE OBJETOS
-    glCallList(predio);
-    for (int i = 0; i < 9; ++i) {
-        glCallList(mesa[i]);
-        glCallList(cadeira[i]);
-    }
-    glCallList(quadro);
-    glCallList(computador);
-    glCallList(bancada[0]);
-    glCallList(bancada[1]);
+    glCallList(modelagem);
     //// FIM DE DESENHO DE OBJETOS
     
     // desempilha matriz anterior à chamada da função
@@ -216,60 +176,34 @@ void teclado(unsigned char key, int x, int y){
         verticalMove = 0;
         break;
     case 27: // esc
-        exit(0);
+        fullscreenmode = !fullscreenmode;
+        if (fullscreenmode) glutFullScreen();
+        else glutReshapeWindow (1024, 800);
+        break;
+    case '7': ModoDeIluminacao = AMBIENTE;
+        LuzAmbEhMax = 0;
+        break;
+    case '8': ModoDeIluminacao = DIFUSA;
+        LuzAmbEhMax = 0;
+        break;
+    case '9': ModoDeIluminacao = ESPECULAR;
+        LuzAmbEhMax = 0;
+        break;
+    case '0': LuzAmbEhMax = !LuzAmbEhMax;
         break;
     }
-    predio = desenhista.desenha_predio (0, 0, 0, aberturaPorta, aberturaPortaLateral);
+    modelagem = desenhista.geraModelagem (aberturaPorta, aberturaPortaLateral);
     glutPostRedisplay();
 }
 
 void inicializa() {
     glBlendFunc (GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+    glShadeModel(GL_SMOOTH);
     glEnable (GL_TEXTURE_2D);
-    /* 
-     * @func glEnable (GL_DEPTH_TEST)
-     * Antes de cada pixel ser desenhado é feita uma comparação com
-     * o valor de profundidade já armazenado
-     */
-    glEnable (GL_DEPTH_TEST);
-    float parede_largura = proporcao * 0.1;
-    // float frontal_comprimento = proporcao * 15.0;
-    // float frontal_altura = proporcao * 6.5;
-    float lateral_comprimento = proporcao * 7.0;
-    // float lateral_altura = proporcao * 5.0;
-    // float entrada_garagem_altura = proporcao * 2.7;
-    // float entrada_garagem_largura = proporcao * 4;
-    // float portao_garagem_altura = proporcao * 2.2;
-    // float portao_garagem_lagura = proporcao * 1;
-    // float portao_garagem_espessura = proporcao * 0.05;
-    float mesa_largura = proporcao * (0.5*3);
-    predio = desenhista.desenha_predio (0, 0, 0, aberturaPorta, aberturaPortaLateral);
-    // mesas e cadeiras
-    mesa[0] = desenhista.desenha_mesa (-mesa_largura, 0, -lateral_comprimento+6);
-    cadeira[0] = desenhista.desenha_cadeira (-mesa_largura, 0, -lateral_comprimento+8);
-    mesa[1] = desenhista.desenha_mesa (0, 0, -lateral_comprimento+6);
-    cadeira[1] = desenhista.desenha_cadeira (0, 0, -lateral_comprimento+8);
-    mesa[2] = desenhista.desenha_mesa (mesa_largura, 0, -lateral_comprimento+6);
-    cadeira[2] = desenhista.desenha_cadeira (mesa_largura, 0, -lateral_comprimento+8);
-
-    mesa[3] = desenhista.desenha_mesa (-mesa_largura, 0, -lateral_comprimento+6+mesa_largura);
-    cadeira[3] = desenhista.desenha_cadeira (-mesa_largura, 0, -lateral_comprimento+8+mesa_largura);
-    mesa[4] = desenhista.desenha_mesa (0, 0, -lateral_comprimento+6+mesa_largura);
-    cadeira[4] = desenhista.desenha_cadeira (0, 0, -lateral_comprimento+8+mesa_largura);
-    mesa[5] = desenhista.desenha_mesa (mesa_largura, 0, -lateral_comprimento+6+mesa_largura);
-    cadeira[5] = desenhista.desenha_cadeira (mesa_largura, 0, -lateral_comprimento+8+mesa_largura);
-
-    mesa[6] = desenhista.desenha_mesa (-mesa_largura, 0, -lateral_comprimento+6+mesa_largura*2);
-    cadeira[6] = desenhista.desenha_cadeira (-mesa_largura, 0, -lateral_comprimento+8+mesa_largura*2);
-    mesa[7] = desenhista.desenha_mesa (0, 0, -lateral_comprimento+6+mesa_largura*2);
-    cadeira[7] = desenhista.desenha_cadeira (0, 0, -lateral_comprimento+8+mesa_largura*2);
-    mesa[8] = desenhista.desenha_mesa (mesa_largura, 0, -lateral_comprimento+6+mesa_largura*2);
-    cadeira[8] = desenhista.desenha_cadeira (mesa_largura, 0, -lateral_comprimento+8+mesa_largura*2);
-    // fim mesas e cadeiras
-    quadro = desenhista.desenha_quadro (0, 0.5, -lateral_comprimento+parede_largura/2);
-    computador = desenhista.desenha_computador (0, proporcao * 0.8, -lateral_comprimento+6);
-    bancada[0] = desenhista.desenha_bancada (-15, 0, -lateral_comprimento+4);
-    bancada[1] = desenhista.desenha_bancada (-15, 0, -4);
+    glColorMaterial ( GL_FRONT, GL_AMBIENT_AND_DIFFUSE );
+    glEnable ( GL_CULL_FACE );
+    glEnable (GL_DEPTH_TEST); // Compara profundidade
+    modelagem = desenhista.geraModelagem (aberturaPorta, aberturaPortaLateral);
 }
 
 int main (int argc,char **argv){
@@ -288,9 +222,8 @@ int main (int argc,char **argv){
     glutKeyboardFunc (teclado);
     glutSpecialFunc (especial);
     glutDisplayFunc (exibir);
-    glutReshapeFunc (remodelar);
+    glutReshapeFunc (reajusteJanela);
     glutIdleFunc (exibir);
-    //iluminacao_externa();
 
     glutMainLoop();
 

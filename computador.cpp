@@ -3,9 +3,6 @@
 unsigned int Desenho::desenha_computador (float pos_x, float pos_y, float pos_z) {
     float cor_computador[3] = {0, 0, 0.1};
     float cor_monitor[3] = {0.6, 0.6, 0.6};
-    float computador_espessura = 1;
-    float computador_comprimento = 1;
-    float computador_altura = 1;
     float base_largura = 0.1;
     float base_altura = 0.01;
     float base_profundidade = 0.2;
@@ -14,8 +11,8 @@ unsigned int Desenho::desenha_computador (float pos_x, float pos_y, float pos_z)
     Desenha_gl gl (pos_x, pos_y, pos_z, proporcao);
 
     /* inicia a composicao do predio */
-    unsigned int computador = glGenLists (1);
-    glNewList (computador, GL_COMPILE);
+    // unsigned int computador = glGenLists (1);
+    // glNewList (computador, GL_COMPILE);
 
     // computador
     glColor3f ( cor_computador[0], cor_computador[1], cor_computador[2] );
@@ -39,6 +36,6 @@ unsigned int Desenho::desenha_computador (float pos_x, float pos_y, float pos_z)
     gl.desenha_cubo();
 
 
-    glEndList();
-    return computador;
+    // glEndList();
+    return 0;
 }

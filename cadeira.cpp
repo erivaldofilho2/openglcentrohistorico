@@ -4,8 +4,8 @@ unsigned int Desenho::desenha_cadeira (float pos_x, float pos_y, float pos_z) {
     Desenha_gl gl (pos_x, pos_y, pos_z, proporcao);
     
     /* inicia a composicao da cadeira */
-    unsigned int cadeira = glGenLists (1);
-    glNewList (cadeira, GL_COMPILE);
+    // unsigned int cadeira = glGenLists (1);
+    // glNewList (cadeira, GL_COMPILE);
 
     float cor_cadeira[3] = {0x27/256.0, 0x28/256.0, 0x22/256.0};
     float cadeira_comprimento_acento = 0.5;
@@ -53,6 +53,6 @@ unsigned int Desenho::desenha_cadeira (float pos_x, float pos_y, float pos_z) {
     gl.define_rotacao (0, 0, 0, 0);
     gl.desenha_cubo();
 
-    glEndList();
-    return cadeira;
+    // glEndList();
+    return 0;
 }

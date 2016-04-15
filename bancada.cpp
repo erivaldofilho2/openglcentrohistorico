@@ -11,15 +11,11 @@ unsigned int Desenho::desenha_bancada (float pos_x, float pos_y, float pos_z) {
     float pernaMesaLado = 0.07;
     float mesaAltura = pernaMesaAltura + mesaEspessura / 2;
     float x, y, z;
-    
-    /* inicia a composicao da bancada */
-    unsigned int bancada = glGenLists (1);
-    glNewList (bancada, GL_COMPILE);
 
     // duas pernas direitas
     x = mesaComp / 2 - pernaMesaLado / 2;
     y = pernaMesaAltura / 2;
-    z = mesaLargura/2 - pernaMesaLado/2;
+    z = mesaLargura / 2 - pernaMesaLado / 2;
     glColor3f ( corMadeira[0], corMadeira[1], corMadeira[2] );
     gl.define_rotacao (0, 0, 0, 0);
     gl.define_escala (pernaMesaLado, pernaMesaAltura, pernaMesaLado);
@@ -83,6 +79,5 @@ unsigned int Desenho::desenha_bancada (float pos_x, float pos_y, float pos_z) {
     gl.define_deslocamento ( x, mesaAltura, 0);
     gl.desenha_cubo(); // borda de comprimento menor
 
-    glEndList();
-    return bancada;
+    return 0;
 }

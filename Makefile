@@ -6,7 +6,8 @@ FONTE=main.cpp\
       cadeira.cpp\
       quadro.cpp\
       computador.cpp\
-      bancada.cpp
+      bancada.cpp\
+      modelagem.cpp
 OBJETO=main.o\
        predio.o\
        janela.o\
@@ -14,7 +15,8 @@ OBJETO=main.o\
        cadeira.o\
        quadro.o\
        computador.o\
-       bancada.o
+       bancada.o\
+       modelagem.o
 APP=centro_historico.app
 
 CC=g++
