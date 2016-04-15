@@ -35,10 +35,10 @@ private:
 class Desenha_gl
 {
 public:
-    Desenha_gl (float pos_x, float pos_y, float pos_z, float _proporcao){
-        x = pos_x; y = pos_y; z = pos_z; proporcao = _proporcao;
-    }
-    ~Desenha_gl(){;}
+    Desenha_gl (float pos_x, float pos_y, float pos_z, float _proporcao) :
+        x (pos_x), y (pos_y), z (pos_z), proporcao (_proporcao)
+    {}
+    ~Desenha_gl(){}
     void define_deslocamento (float _desloc_x, float _desloc_y, float _desloc_z) {
         desloc_x = x + proporcao * _desloc_x;
         desloc_y = y + proporcao * _desloc_y;

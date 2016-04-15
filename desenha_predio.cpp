@@ -38,22 +38,22 @@ unsigned int Desenho::desenha_predio (float pos_x, float pos_y, float pos_z, flo
     glBegin (GL_QUADS);
         //glNormal3f(0,1,0);
         x = proporcao * frontalComp / 2;
-        z = -proporcao * lateralComp;
+        z = proporcao * lateralComp;
         y = 0.05;
-        glVertex3f (-x, y, z);
-        glVertex3f (-x, y, 0);
-        glVertex3f ( x, y, 0);
-        glVertex3f ( x, y, z);
+        glVertex3f (-x, y, -z);
+        glVertex3f (-x, y,  0);
+        glVertex3f ( x, y,  0);
+        glVertex3f ( x, y, -z);
     glEnd();
     // Desenha forro no interior do prédio
     glColor3f ( corParede[0], corParede[1], corParede[2] );
     glBegin (GL_QUADS);
         //glNormal3f(0,-1,0);
         y = proporcao * (lateralAltura - 0.1);
-        glVertex3f (-x, y, 0);
-        glVertex3f (-x, y, z);
-        glVertex3f ( x, y, z);
-        glVertex3f ( x, y, 0);
+        glVertex3f (-x, y,  0);
+        glVertex3f (-x, y, -z);
+        glVertex3f ( x, y, -z);
+        glVertex3f ( x, y,  0);
     glEnd();
     
     // parede frontal

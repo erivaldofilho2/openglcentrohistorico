@@ -10,6 +10,7 @@ GLfloat ratio;
 #define DIFUSA 1
 #define ESPECULAR 2
 
+float ambiente[3] = {0,0,0};
 
 int ModoDeIluminacao = AMBIENTE;
 
@@ -22,19 +23,19 @@ int LuzAmbEhMax = 0;
 void defineLuzESPECULAR(void)
 {
   // Define cores para um objeto dourado
-  GLfloat LuzAmbiente[]   = {0.24725f, 0.1995f, 0.07f } ;
-  GLfloat LuzAmbienteMAX[]   = {1,1,1 } ;
+  GLfloat LuzAmbiente[]   = {0.24725, 0.1995, 0.07} ;
+  GLfloat LuzAmbienteMAX[]   = {1,1,1} ;
 
-  GLfloat LuzDifusa[]   = {0.75164f, 0.60648f, 0.22648f, 0.5f };
-  GLfloat LuzEspecular[] = {0.626281f, 0.555802f, 0.366065f, 1.0f };
+  GLfloat LuzDifusa[]   = {0.75164, 0.60648, 0.22648f, 0.5 };
+  GLfloat LuzEspecular[] = {0.626281, 0.555802, 0.366065, 0.5 };
   //GLfloat LuzEspecular[] = {1,0,0, 1.0f };
-  GLfloat PosicaoLuz0[]  = {3.0f, 3.0f, 0.0f, 1.0f };
-  GLfloat PosicaoLuz1[]  = {-3.0f, -3.0f, 0.0f, 1.0f };
-  GLfloat Especularidade[] = {1.0f, 1.0f, 1.0f, 1.0f };
+  GLfloat PosicaoLuz0[]  = {3.0, 3.0, 0.0, 1.0};
+  GLfloat PosicaoLuz1[]  = {-3.0, -3.0, 0.0, 1.0 };
+  GLfloat Especularidade[] = {0, 0, 0, 0 };
 
    // ****************  Fonte de Luz 0
 
-    glEnable ( GL_COLOR_MATERIAL );
+   glEnable ( GL_COLOR_MATERIAL );
 
 
    // Habilita o uso de iluminação
@@ -61,7 +62,7 @@ void defineLuzESPECULAR(void)
   // Define a concentração do brilho.
   // Quanto maior o valor do Segundo parametro, mais
   // concentrado será o brilho. (Valores válidos: de 0 a 128)
-  glMateriali(GL_FRONT,GL_SHININESS,112);
+  glMateriali(GL_FRONT,GL_SHININESS,20);
 
   // ****************  Fonte de Luz 1
 
@@ -131,17 +132,20 @@ glEnable(GL_TEXTURE_GEN_T);
 glEnable(GL_TEXTURE_GEN_R);  
 glEnable(GL_TEXTURE_GEN_Q);  
   
-    //Bind & enable shadow map texture  
-    glEnable(GL_TEXTURE_2D); 
+  //Bind & enable shadow map texture  
+  glEnable(GL_TEXTURE_2D); 
 
   // Define cores para um objeto dourado
-  //GLfloat LuzAmbiente[]   = {0.24725f, 0.1995f, 0.07f};
-  GLfloat LuzAmbiente[]   = {0,0,0} ;
-  GLfloat LuzAmbienteMAX[]   = {1,1,1 } ;
-  GLfloat LuzDifusa[]   = {0.75164f, 0.60648f, 0.22648f, 0.5 };
-  GLfloat LuzEspecular[] = {0,0,0, 1 };
-  GLfloat PosicaoLuz0[]  = {3.0f, 1003.0f, 0.0f, 1.0f };
-  GLfloat PosicaoLuz1[]  = {-3.0f, 103.0f, 0.0f, 1.0f };
+  GLfloat LuzAmbiente[]   = {0.24725, 0.1995, 0.07};
+  LuzAmbiente[0] += ambiente[0];
+  LuzAmbiente[1] += ambiente[1];
+  LuzAmbiente[2] += ambiente[2];
+  //GLfloat LuzAmbiente[]   = {0,0,0} ;
+  GLfloat LuzAmbienteMAX[]   = {1,1,1} ;
+  GLfloat LuzDifusa[]   = {0.75164, 0.60648, 0.22648, 1 };
+  GLfloat LuzEspecular[] = {0,0,0, 0};
+  GLfloat PosicaoLuz0[]  = {3.0, 1003.0, 0.0, 1.0 };
+  GLfloat PosicaoLuz1[]  = {-3.0, 103.0, 0.0, 1.0 };
   GLfloat Especularidade[] = {0,0,0,1 };
 
    // ****************  Fonte de Luz 0
@@ -161,16 +165,17 @@ glEnable(GL_TEXTURE_GEN_Q);
   glEnable(GL_LIGHT0);
 
   // Ativa o "Color Tracking"
-  glEnable(GL_COLOR_MATERIAL);
+  //glEnable(GL_COLOR_MATERIAL);
 
   // Define a reflectancia do material
-  glMaterialfv(GL_FRONT,GL_SPECULAR, Especularidade);
+  //glMaterialfv(GL_FRONT,GL_SPECULAR, Especularidade);
 
   // Define a concentração do brilho.
   // Quanto maior o valor do Segundo parametro, mais
   // concentrado será o brilho. (Valores válidos: de 0 a 128)
-  glMateriali(GL_FRONT,GL_SHININESS, 30);
+  //glMateriali(GL_FRONT,GL_SHININESS, 30);
 
+/*
   // ****************  Fonte de Luz 1
 
   // Ativa o uso da luz ambiente
@@ -192,6 +197,6 @@ glEnable(GL_TEXTURE_GEN_Q);
   // Define a concentração do brilho.
   // Quanto maior o valor do Segundo parametro, mais
   // concentrado será o brilho. (Valores válidos: de 0 a 128)
-  glMateriali(GL_FRONT,GL_SHININESS, 0);
-
+  //glMateriali(GL_FRONT,GL_SHININESS, 0);
+*/
 }

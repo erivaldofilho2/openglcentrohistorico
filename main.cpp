@@ -14,7 +14,7 @@
 
 unsigned int modelagem; // indentificador de lista de chamada
 
-float proporcao = 2.5;
+float proporcao = 5;
 Desenho desenhista (proporcao); // coleção de funções que desenha os objetos
 bool fullscreenmode = false;
 float vetor_x = 0.0, vetor_y = 0.0, vetor_z = -1.0; // vetor direção da câmera
@@ -62,14 +62,11 @@ void exibir(void){
     // Escolha da iluminação
     switch(ModoDeIluminacao)
     {
-    case ESPECULAR:
-            defineLuzESPECULAR();
+    case ESPECULAR: defineLuzESPECULAR();
             break;
-    case DIFUSA:
-            defineLuzDIFUSA();
+    case DIFUSA: defineLuzDIFUSA();
             break;
-    case AMBIENTE:
-            defineLuzAMBIENTE();
+    case AMBIENTE: defineLuzAMBIENTE();
             break;
     }
 
@@ -90,19 +87,13 @@ void exibir(void){
 
 void especial(int key, int x, int y){
     switch (key) {
-    case GLUT_KEY_UP:
-        if (vetor_y <= 1.6)
-            vetor_y += 0.1;
+    case GLUT_KEY_UP: if (vetor_y <= 1.6) vetor_y += 0.1;
         break;
-    case GLUT_KEY_DOWN:
-        if (vetor_y >= -1.6)
-            vetor_y -= 0.1;
+    case GLUT_KEY_DOWN: if (vetor_y >= -1.6) vetor_y -= 0.1;
         break;
-    case GLUT_KEY_LEFT:
-        deltaAngle -= 0.1;
+    case GLUT_KEY_LEFT: deltaAngle -= 0.1;
         break;
-    case GLUT_KEY_RIGHT:
-        deltaAngle += 0.1;
+    case GLUT_KEY_RIGHT: deltaAngle += 0.1;
         break;
     }
 
@@ -114,66 +105,47 @@ void especial(int key, int x, int y){
 
 void teclado(unsigned char key, int x, int y){
     switch (key) {
-    case 'w':
-        deltaMove = 3;
+    case 'w': deltaMove = 3;
         break;
-    case 's':
-        deltaMove = -3;
+    case 's': deltaMove = -3;
         break;
-    case 'a':
-        lateralMove = -3;
+    case 'a': lateralMove = -3;
         break;
-    case 'd':
-        lateralMove = 3;
+    case 'd': lateralMove = 3;
         break;
-    case 'r':
-        verticalMove = 3;
+    case 'r': verticalMove = 3;
         break;
-    case 'f':
-        verticalMove = -3;
+    case 'f': verticalMove = -3;
         break;
-    case 'W':
-        deltaMove = 0.1;
+    case 'W': deltaMove = 0.1;
         break;
-    case 'S':
-        deltaMove = -0.1;
+    case 'S': deltaMove = -0.1;
         break;
-    case 'A':
-        lateralMove = -0.1;
+    case 'A': lateralMove = -0.1;
         break;
-    case 'D':
-        lateralMove = 0.1;
+    case 'D': lateralMove = 0.1;
         break;
-    case 'R':
-        verticalMove = 0.1;
+    case 'R': verticalMove = 0.1;
         break;
-    case 'F':
-        verticalMove = -0.1;
+    case 'F': verticalMove = -0.1;
         break;
     case 'O':
-    case 'o':
-        if (aberturaPorta <= 90 - 3)
-            aberturaPorta += 3;
+    case 'o': if (aberturaPorta <= 90 - 3) aberturaPorta += 3;
+        modelagem = desenhista.geraModelagem (aberturaPorta, aberturaPortaLateral);
         break;
     case 'P':
-    case 'p':
-        if (aberturaPorta >= 3)
-            aberturaPorta -= 3;
+    case 'p': if (aberturaPorta >= 3) aberturaPorta -= 3;
+        modelagem = desenhista.geraModelagem (aberturaPorta, aberturaPortaLateral);
         break;
     case 'K':
-    case 'k':
-        if (aberturaPortaLateral <= 90 - 3)
-            aberturaPortaLateral += 3;
+    case 'k': if (aberturaPortaLateral <= 90 - 3) aberturaPortaLateral += 3;
+        modelagem = desenhista.geraModelagem (aberturaPorta, aberturaPortaLateral);
         break;
     case 'L':
-    case 'l':
-        if (aberturaPortaLateral >= 3)
-            aberturaPortaLateral -= 3;
+    case 'l': if (aberturaPortaLateral >= 3) aberturaPortaLateral -= 3;
+        modelagem = desenhista.geraModelagem (aberturaPorta, aberturaPortaLateral);
         break;
-    case '1':
-        vetor_y = 0;
-        y = 10;
-        verticalMove = 0;
+    case '1': vetor_y = 0; y = 10; verticalMove = 0;
         break;
     case 27: // esc
         fullscreenmode = !fullscreenmode;
@@ -191,8 +163,21 @@ void teclado(unsigned char key, int x, int y){
         break;
     case '0': LuzAmbEhMax = !LuzAmbEhMax;
         break;
+    case '+':
+        if (ambiente[0] < 0.5) {
+            ambiente[0] +=0.01;
+            ambiente[1] +=0.01;
+            ambiente[2] +=0.01;
+        }
+        break;
+    case '-':
+        if (ambiente[0] > -0.5) {
+            ambiente[0] -=0.01;
+            ambiente[1] -=0.01;
+            ambiente[2] -=0.01;
+        }
+        break;
     }
-    modelagem = desenhista.geraModelagem (aberturaPorta, aberturaPortaLateral);
     glutPostRedisplay();
 }
 
@@ -201,7 +186,7 @@ void inicializa() {
     glShadeModel(GL_SMOOTH);
     glEnable (GL_TEXTURE_2D);
     glColorMaterial ( GL_FRONT, GL_AMBIENT_AND_DIFFUSE );
-    glEnable ( GL_CULL_FACE );
+    //glEnable ( GL_CULL_FACE );
     glEnable (GL_DEPTH_TEST); // Compara profundidade
     modelagem = desenhista.geraModelagem (aberturaPorta, aberturaPortaLateral);
 }
