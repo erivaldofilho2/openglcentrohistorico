@@ -1,6 +1,6 @@
 #include "desenho.h"
 
-unsigned int Desenho::desenha_bancada (float pos_x, float pos_y, float pos_z) {
+void Desenho::desenha_bancada (float pos_x, float pos_y, float pos_z) {
     Desenha_gl gl (pos_x, pos_y, pos_z, proporcao);
     float corMadeira[3] = {0x5f/256.0, 0x1d/256.0, 0x07/256.0};
     float corMarmore[3] = {0x35/256.0, 0x35/256.0, 0x35/256.0};
@@ -78,6 +78,4 @@ unsigned int Desenho::desenha_bancada (float pos_x, float pos_y, float pos_z) {
     gl.desenha_cubo(); // borda de comprimento menor
     gl.define_deslocamento ( x, mesaAltura, 0);
     gl.desenha_cubo(); // borda de comprimento menor
-
-    return 0;
 }

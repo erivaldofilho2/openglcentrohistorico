@@ -14,17 +14,17 @@
 class Desenho
 {
 public:
-    Desenho (float _proporcao = 3) {proporcao = _proporcao;}
-    unsigned int geraModelagem (float anguloPortaGaragem, float anguloPortaLateral);
+    Desenho (float proporcao = 5) : proporcao (proporcao) {}
+    void geraModelagem (float anguloPortaGaragem, float anguloPortaLateral);
 
 private:
-    unsigned int desenha_predio (float x, float y, float z, float anguloPortaGaragem, float anguloPortaLateral);
-    unsigned int desenha_mesa (float x, float y, float z);
-    unsigned int desenha_cadeira (float x, float y, float z);
-    unsigned int desenha_quadro (float x, float y, float z);
-    unsigned int desenha_computador (float x, float y, float z);
-    unsigned int desenha_bancada (float x, float y, float z);
-    unsigned int desenha_janela (float x, float y, float z);
+    void desenha_predio (float x, float y, float z, float anguloPortaGaragem, float anguloPortaLateral);
+    void desenha_mesa (float x, float y, float z);
+    void desenha_cadeira (float x, float y, float z);
+    void desenha_quadro (float x, float y, float z);
+    void desenha_computador (float x, float y, float z);
+    void desenha_bancada (float x, float y, float z);
+    void desenha_janela (float x, float y, float z);
     float proporcao;
 };
 

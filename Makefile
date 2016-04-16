@@ -7,7 +7,8 @@ FONTE=main.cpp\
       desenha_quadro.cpp\
       desenha_computador.cpp\
       desenha_bancada.cpp\
-      modelagem.cpp
+      modelagem.cpp\
+      janela.cpp
 OBJETO=main.o\
        desenha_predio.o\
        desenha_janela.o\
@@ -16,7 +17,8 @@ OBJETO=main.o\
        desenha_quadro.o\
        desenha_computador.o\
        desenha_bancada.o\
-       modelagem.o
+       modelagem.o\
+       janela.o
 APP=centro_historico.app
 
 CC=g++

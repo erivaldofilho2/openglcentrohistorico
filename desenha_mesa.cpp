@@ -1,6 +1,6 @@
 #include "desenho.h"
 
-unsigned int Desenho::desenha_mesa (float pos_x, float pos_y, float pos_z) {
+void Desenho::desenha_mesa (float pos_x, float pos_y, float pos_z) {
     Desenha_gl gl (pos_x, pos_y, pos_z, proporcao);
     float cor_mesa[3] = {0x56/256.0, 0x56/256.0, 0x56/256.0};
     float cor_mesa_pernas[3] = {0x27/256.0, 0x28/256.0, 0x22/256.0};
@@ -11,10 +11,6 @@ unsigned int Desenho::desenha_mesa (float pos_x, float pos_y, float pos_z) {
     float perna_mesa_lado = 0.05;
     float perna_mesa_largura = 0.1;
     float mesa_altura = perna_mesa_altura + mesa_espessura / 2;
-    
-    /* inicia a composicao da mesa */
-    // unsigned int mesa = glGenLists (1);
-    // glNewList (mesa, GL_COMPILE);
 
     // perna direita
     glColor3f ( cor_mesa_pernas[0], cor_mesa_pernas[1], cor_mesa_pernas[2] );
@@ -41,7 +37,4 @@ unsigned int Desenho::desenha_mesa (float pos_x, float pos_y, float pos_z) {
     gl.define_deslocamento (0, mesa_altura, 0);
     gl.define_escala (mesa_comprimento, mesa_espessura, mesa_largura);
     gl.desenha_cubo();
-
-    // glEndList();
-    return 0;
 }

@@ -145,8 +145,8 @@ glEnable(GL_TEXTURE_GEN_Q);
   GLfloat LuzDifusa[]   = {0.75164, 0.60648, 0.22648, 1 };
   GLfloat LuzEspecular[] = {0,0,0, 0};
   GLfloat PosicaoLuz0[]  = {3.0, 1003.0, 0.0, 1.0 };
-  GLfloat PosicaoLuz1[]  = {-3.0, 103.0, 0.0, 1.0 };
-  GLfloat Especularidade[] = {0,0,0,1 };
+  //GLfloat PosicaoLuz1[]  = {-3.0, 103.0, 0.0, 1.0 };
+  //GLfloat Especularidade[] = {0,0,0,1 };
 
    // ****************  Fonte de Luz 0
   glEnable ( GL_COLOR_MATERIAL );

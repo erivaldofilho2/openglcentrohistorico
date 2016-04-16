@@ -1,6 +1,6 @@
 #include "desenho.h"
 
-unsigned int Desenho::desenha_quadro (float pos_x, float pos_y, float pos_z) {
+void Desenho::desenha_quadro (float pos_x, float pos_y, float pos_z) {
     float cor_quadro[3] = {1, 1, 1};
     float cor_borda[3] = {0.6, 0.6, 0.6};
     float quadro_espessura = 0.03;
@@ -10,10 +10,6 @@ unsigned int Desenho::desenha_quadro (float pos_x, float pos_y, float pos_z) {
     float borda_largura = 0.05;
     float borda_espessura = quadro_espessura + 0.01;
     Desenha_gl gl (pos_x, pos_y, pos_z, proporcao);
-
-    /* inicia a composicao do quadro */
-    unsigned int quadro = glGenLists (1);
-    glNewList (quadro, GL_COMPILE);
 
     // quadro
     glColor3f ( cor_quadro[0], cor_quadro[1], cor_quadro[2] );
@@ -40,7 +36,4 @@ unsigned int Desenho::desenha_quadro (float pos_x, float pos_y, float pos_z) {
     gl.define_deslocamento ( quadro_comprimento/2, altura_meio_quadro, 0);
     gl.define_escala (borda_largura, quadro_altura, borda_espessura);
     gl.desenha_cubo();
-
-    glEndList();
-    return quadro;
 }

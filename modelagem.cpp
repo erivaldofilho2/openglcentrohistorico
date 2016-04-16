@@ -1,9 +1,6 @@
 #include "desenho.h"
 
-unsigned int Desenho::geraModelagem (float anguloPortaGaragem, float anguloPortaLateral) {
-    unsigned int model = glGenLists (1);
-    glNewList (model, GL_COMPILE);
-
+void Desenho::geraModelagem (float anguloPortaGaragem, float anguloPortaLateral) {
     // inicia organização da modelagem
     desenha_predio (0, 0, 0, anguloPortaGaragem, anguloPortaLateral);
     desenha_mesa (-proporcao*1.5, 0, -proporcao*5);
@@ -28,7 +25,4 @@ unsigned int Desenho::geraModelagem (float anguloPortaGaragem, float anguloPorta
     //desenha_computador ();
     desenha_bancada (-15, 0, -proporcao*7.0+4);
     desenha_bancada (-15, 0, -4);
-
-    glEndList();
-    return model;
 }
