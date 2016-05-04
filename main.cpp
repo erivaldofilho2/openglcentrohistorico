@@ -13,11 +13,10 @@ void teclasEspeciais (int key, int x, int y);
 void teclado (unsigned char key, int x, int y);
 
 void init () {
-    glBlendFunc (GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
-    glShadeModel(GL_SMOOTH);
+    //glBlendFunc (GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
+    glShadeModel(GL_FLAT);
     glEnable (GL_TEXTURE_2D);
     glColorMaterial ( GL_FRONT, GL_AMBIENT_AND_DIFFUSE );
-    //glEnable ( GL_CULL_FACE );
     glEnable (GL_DEPTH_TEST); // Compara profundidade
 }
 

@@ -7,6 +7,7 @@
 #include <GL/glu.h>
 #include <GL/glut.h>
 #include "desenho.h"
+#include "SOIL.h"
 //#include "iluminacao.hpp"
 
 #define PI 3.1415926535897932

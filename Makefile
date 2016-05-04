@@ -8,7 +8,8 @@ FONTE=main.cpp\
       desenha_computador.cpp\
       desenha_bancada.cpp\
       modelagem.cpp\
-      janela.cpp
+      janela.cpp\
+      carrega_textura.cpp
 OBJETO=main.o\
        desenha_predio.o\
        desenha_janela.o\
@@ -18,11 +19,12 @@ OBJETO=main.o\
        desenha_computador.o\
        desenha_bancada.o\
        modelagem.o\
-       janela.o
+       janela.o\
+       carrega_textura.o
 APP=centro_historico.app
 
 CC=g++
-GLFLAGS=-lglut -lGL -lGLU
+GLFLAGS=-lglut -lGL -lGLU -lSOIL
 CFLAGS=-std=c++11 -Wall
 
 all: compila
@@ -34,5 +36,5 @@ compila: objeto
 objeto:
 	$(CC) -c $(CFLAGS) $(FONTE)
 
-clear:
+clean:
 	rm -f $(APP) *.o

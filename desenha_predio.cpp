@@ -25,13 +25,14 @@ void Desenho::desenha_predio (float pos_x, float pos_y, float pos_z, float abert
     // inicia a composicao do predio
 
     // Desenha chão
+    glBindTexture(GL_TEXTURE_2D, textura_id[grama]);
     glColor3f (0.0, 0.29, 0.0);
     glBegin (GL_QUADS);
         //glNormal3f(0,1,0);
-        glVertex3f (-10000, 0, -10000);
-        glVertex3f (-10000, 0,  10000);
-        glVertex3f ( 10000, 0,  10000);
-        glVertex3f ( 10000, 0, -10000);
+        glTexCoord2f(1.0f, 0.0f); glVertex3f (-10000, 0, -10000);
+        glTexCoord2f(1.0f, 1.0f); glVertex3f (-10000, 0,  10000);
+        glTexCoord2f(0.0f, 1.0f); glVertex3f ( 10000, 0,  10000);
+        glTexCoord2f(0.0f, 0.0f); glVertex3f ( 10000, 0, -10000);
     glEnd();
     // Desenha chão no interior do prédio
     glColor3f (0.8, 0.8, 0.8);
@@ -58,10 +59,12 @@ void Desenho::desenha_predio (float pos_x, float pos_y, float pos_z, float abert
     
     // parede frontal
     glNormal3f(0,0,1);
+    gl.define_textura (textura_id[grama]);
     gl.define_deslocamento (0, frontalAltura / 2, 0);
     gl.define_escala (frontalComp + paredeLargura, frontalAltura, paredeLargura);
     gl.define_rotacao (0, 0, 0, 0);
     gl.desenha_cubo();
+    gl.remove_textura();
     // desenha janelas
     desenha_janela (0, proporcao * 1.5, 0);
     desenha_janela (-proporcao * (1.4), proporcao * 1.5, 0);

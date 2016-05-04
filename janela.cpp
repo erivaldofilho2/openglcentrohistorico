@@ -1,6 +1,6 @@
 #include "janela.h"
 
-Janela::Janela () {
+Janela::Janela() {
     glutInitWindowPosition (0,0);
     glutInitWindowSize (1024, 800);
     glutInitDisplayMode (GLUT_RGB | GLUT_DEPTH | GLUT_DOUBLE);
@@ -58,8 +58,8 @@ void Janela::exibir(void){
     glEnable (GL_BLEND);
     glShadeModel (GL_SMOOTH);
     glDepthMask (GL_TRUE);
-    glClearColor (0.32,0.57,0.88,0);
     glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClearColor (ambiente[0]+0.32, ambiente[1]+0.57, ambiente[2]+0.88, 0);//(0.32,0.57,0.88,0);
     glLoadIdentity(); // Reinicia matriz de transformação
 
     // Escolha da iluminação
@@ -163,6 +163,7 @@ void Janela::teclado(unsigned char key, int x, int y){
         LuzAmbEhMax = 0;
         break;
     case '0': LuzAmbEhMax = !LuzAmbEhMax;
+        ModoDeIluminacao = DIFUSA;
         break;
     case '+':
         if (ambiente[0] < 0.5) {
@@ -278,16 +279,16 @@ void Janela::defineLuzDIFUSA(void) {
     // glTexGenfv(GL_R, GL_EYE_PLANE, textureTrasnformR);  
     // glTexGenfv(GL_Q, GL_EYE_PLANE, textureTrasnformQ);  
     // Ativa  
-    glEnable(GL_TEXTURE_GEN_S);  
-    glEnable(GL_TEXTURE_GEN_T);  
-    glEnable(GL_TEXTURE_GEN_R);  
-    glEnable(GL_TEXTURE_GEN_Q);  
+    // glEnable(GL_TEXTURE_GEN_S);  
+    // glEnable(GL_TEXTURE_GEN_T);  
+    // glEnable(GL_TEXTURE_GEN_R);  
+    // glEnable(GL_TEXTURE_GEN_Q);  
   
     //Bind & enable shadow map texture  
-    glEnable(GL_TEXTURE_2D); 
+    // glEnable(GL_TEXTURE_2D); 
 
     // Define cores para um objeto dourado
-    GLfloat LuzAmbiente[]   = {0.24725, 0.1995, 0.07};
+    GLfloat LuzAmbiente[]   = {0,0,0};//{0.24725, 0.1995, 0.07};
     LuzAmbiente[0] += ambiente[0];
     LuzAmbiente[1] += ambiente[1];
     LuzAmbiente[2] += ambiente[2];
@@ -295,9 +296,10 @@ void Janela::defineLuzDIFUSA(void) {
     GLfloat LuzAmbienteMAX[]   = {1,1,1} ;
     GLfloat LuzDifusa[]   = {0.75164, 0.60648, 0.22648, 1 };
     GLfloat LuzEspecular[] = {0,0,0, 0};
-    GLfloat PosicaoLuz0[]  = {3.0, 1003.0, 0.0, 1.0 };
+    GLfloat PosicaoLuz0[]  = {0.0,  7, 5, 1.0 };
+    GLfloat direcaoLuz0[]  = {0.0, -7, 5, 1.0 };
     //GLfloat PosicaoLuz1[]  = {-3.0, 103.0, 0.0, 1.0 };
-    //GLfloat Especularidade[] = {0,0,0,1 };
+    GLfloat Especularidade[] = {0,0,0,0};
 
     // ****************  Fonte de Luz 0
     glEnable ( GL_COLOR_MATERIAL );
@@ -311,15 +313,19 @@ void Janela::defineLuzDIFUSA(void) {
     else glLightfv(GL_LIGHT0, GL_AMBIENT, LuzAmbiente);
     // Define os parametros da Luz número Zero
     glLightfv(GL_LIGHT0, GL_DIFFUSE, LuzDifusa  );
-    glLightfv(GL_LIGHT0, GL_SPECULAR, LuzEspecular  );
-    glLightfv(GL_LIGHT0, GL_POSITION, PosicaoLuz0 );
-    glEnable(GL_LIGHT0);
+    //glLightfv(GL_LIGHT0, GL_SPECULAR, LuzEspecular  );
+    glLightfv(GL_LIGHT0, GL_POSITION, PosicaoLuz0);
+    //glLightf (GL_LIGHT0, GL_SPOT_CUTOFF, 90);
+    //glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, direcaoLuz0);
+    glEnable (GL_LIGHT0);
+    glEnable (GL_AUTO_NORMAL);
+    glEnable (GL_NORMALIZE);
 
     // Ativa o "Color Tracking"
-    //glEnable(GL_COLOR_MATERIAL);
+    glEnable(GL_COLOR_MATERIAL);
 
     // Define a reflectancia do material
-    //glMaterialfv(GL_FRONT,GL_SPECULAR, Especularidade);
+    glMaterialfv(GL_FRONT,GL_SPECULAR, Especularidade);
 
     // Define a concentração do brilho.
     // Quanto maior o valor do Segundo parametro, mais
